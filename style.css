@@ -1,0 +1,36 @@
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.upper-container {
+    background: rgb(208, 211, 10); 
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.title-container {
+    border: solid red;
+    height:fit-content;
+    font-size: 46px;
+    font-weight: bolder;
+    text-align: center;
+    
+    
+}
+
+button {
+
+    width: fit-content;
+    height: fit-content;
+    background: white;
+    font-size: 36px;
+    
+
+}
+

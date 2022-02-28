@@ -25,12 +25,13 @@ body {
 }
 
 button {
-
     width: fit-content;
     height: fit-content;
-    background: white;
+    background: rgb(17, 80, 216);
     font-size: 36px;
-    
+    margin-left: 600px;
+    border-radius: 30px;
+    box-shadow: 0ex navy;
 
 }
 

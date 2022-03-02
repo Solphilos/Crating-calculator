@@ -5,7 +5,7 @@ body {
 }
 
 .upper-container {
-    background: rgb(208, 211, 10); 
+     
     width: 100%;
     height: 500px;
     display: flex;
@@ -15,7 +15,6 @@ body {
 }
 
 .title-container {
-    border: solid red;
     height:fit-content;
     font-size: 46px;
     font-weight: bolder;
@@ -35,3 +34,13 @@ button {
 
 }
 
+.instruction {
+    width: 400px; 
+    font-size: 30px;
+    margin-left: 600px;
+    text-align: center;
+}
+
+.inputField {
+    margin-left: 600px;
+}

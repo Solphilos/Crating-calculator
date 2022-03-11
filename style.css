@@ -11,7 +11,7 @@ body {
     display: flex;
     background: #1263e6;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
     border: solid orange 10px;
 }
@@ -31,7 +31,7 @@ button {
     height: fit-content;
     background: orange;
     font-size: 36px;
-    margin-left: 600px;
+    
     border-radius: 30px;
     box-shadow: grey;
     color: white;
@@ -55,12 +55,19 @@ button {
 
 }
 
-.textField1, .textField2 {
+.textField1 {
    
     width:fit-content;
-    margin-right: 5px;
+    margin-right: 7px;
     font: 25px;
     color: white;
 }
 
+.textField2 {
+   
+    width:fit-content;
+    
+    font: 25px;
+    color: white;
 
+}

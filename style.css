@@ -26,7 +26,7 @@ body {
     
 }
 
-button {
+.a {
     width: fit-content;
     height: fit-content;
     background: orange;
@@ -70,4 +70,20 @@ button {
     font: 25px;
     color: white;
 
+}
+
+.bases {
+    color: white;
+    
+}
+
+.mids{
+    color: white;
+    margin-right: 25px;
+}
+
+
+.tips {
+    color: white; 
+    margin-right: 26px;
 }

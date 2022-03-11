@@ -23,6 +23,9 @@ document.getElementsByClassName("clicky").onclick = function() {clicky()}
       case '12': 
       document.getElementById("result").innerHTML = 'combo test 2';
       break;
+      case '21':
+      document.getElementById("result").innerHTML = 'combo test 3'
+      break;
 
 
 

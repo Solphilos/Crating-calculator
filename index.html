@@ -7,31 +7,71 @@
     </head>
 
         <body>
+            
+            <div class="title-container">
+               <h1>CRATE CALCULATOR</h1>
+            </div>
+            <div class="main-container">
+
             <div class="upper-container">
 
-                   <div class="title-container"><h1>CRATE CALCULATOR</h1></div>
+                   
                    <div class="input-container">
-                       <div class="textField1">Number of new boxes <input type="text" id="new"></input></div>
-                       <div class="textField2">Number of old boxes <input type="text" id ="old"></input></div>
+                    <ul> 
+                        <li>
+                    <label for="new">Number of new boxes</label>
+                    <input type="number" min="1" id="new" name="new"></input>
+                        </li><li>
+                    <label for="old">Number of old boxes</label>
+                    <input type="number" min="1" id="old" name="old" style="margin-left: 8px"></input>
+                        </li>
+                    </ul>
+                    <a href="unboxed.html"><button class="linkedpage">Click here if unboxed</button></a>
+                    
+                       <button class="a" onclick="clicky()">Calculate</button>
+                       <button class="reset">Reset</button>
+                        
+                    
                    </div>  
 
-                 <div class="clicky"><button class="a" onclick="clicky()">Calculate</button></div>
-                 <div> <a href="unboxed.html"><button class="linkedpage">Click here if unboxed</button></a></div>
+                 <div class="result-panel">
+                    <table>
+                        <tr>
+                        <th rowspan="2" style="background-color: rgb(214, 224, 255);">Dimensions</th>
+                        <th style="background-color: rgb(214, 224, 255);">Length</th>
+                        <th style="background-color: rgb(214, 224, 255);">Width</th>
+                        <th style="background-color: rgb(214, 224, 255);">Height</th>
+                        </tr>
+                        <tr>
+                         <td id="length"></td>
+                         <td id="width"></td>
+                         <td id="height"></td>   
+                        </tr>
+                    <tr>
+                            <th rowspan="2" colspan="1" style="background-color: rgb(231, 222, 182)">Materials</th>
+                            <th colspan="2" style="background-color: rgb(231, 222, 182)">2x4</th>
+                            <th style="background-color: rgb(231, 222, 182)">Plywood</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2" id="2x4" style="text-align: center;"></td>
+                            <td id="ply"></td>
+                        </tr>
+                    </table>
+                    
+                    
+                 </div>
+
+     
+                 
+
             
         
              </div>
-
-
-
-
-
-
-           <div class="result-container">
+            </div>
+             
+               
+             
       
-            <div class="result-panel"><p id="result1"></p> 
-                                      <p id="result2"></p> 
-                                      <p id ="result3"></p>  </div>
-</div>
 
 
 

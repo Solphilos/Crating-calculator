@@ -1,8 +1,24 @@
 
 document.getElementsByClassName("clicky").onclick = function() {clicky()}
 
+document.getElementById("height").innerHTML =  '0';
+  document.getElementById("width").innerHTML =  '0';
+  document.getElementById("length").innerHTML = '0';
+  document.getElementById("2x4").innerHTML =  '0';
+  document.getElementById("ply").innerHTML = '0';
+
+
 function clicky() {
 
+document.querySelector('.reset').addEventListener('click', function() { 
+  document.getElementById("height").innerHTML =  '0';
+  document.getElementById("width").innerHTML =  '0';
+  document.getElementById("length").innerHTML = '0';
+  document.getElementById("2x4").innerHTML =  '0';
+  document.getElementById("ply").innerHTML = '0';
+  document.querySelector('input[name="new"]').value = '';
+  document.querySelector('input[name="old"]').value = '';
+})
    
  // obtains value of text fields and asigns them to newBoxes and oldBoxes variables //
  let newBoxes = document.getElementById("new").value; 
@@ -41,10 +57,17 @@ switch (reference) {
 
 // if only new boxes are entered return appropriate values
 
+// to make things more elegant, make a default crate size where needed instead of repeating, then make indiviual parameters for differences in wood amount.
+// use boolean values to reduce repetition. example: if boxes <= a certain number, return the shared value
+
 else if (newBoxes) {
 switch (newBoxes) {        // try boolean values: i. e, if user inputs value >= a specific number, return appropriate values
    case '1':
-    document.getElementById("result1").innerHTML = 'Crate dimensions: 12" wide, 16\' long ';
+    document.getElementById("length").innerHTML = "16'";
+    document.getElementById("width").innerHTML = '12"';
+    document.getElementById("height").innerHTML = '15"';
+    document.getElementById("2x4").innerHTML = '42 feet';
+    document.getElementById("ply").innerHTML = 'None';
     break;
    case '2':
     document.getElementById("result1").innerHTML = '12x16';

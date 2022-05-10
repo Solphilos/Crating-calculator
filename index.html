@@ -9,6 +9,9 @@
         <body>
             <div class="header">
                 <h1>CRATE CALCULATOR</h1>
+            <div class="search_input">
+                <label for="search" class="search">Search:</label>
+                <input type="search" name="search" id="search"></div>
             </div>
             
                
@@ -20,7 +23,15 @@
 
                    
                    <div class="input-container">
-                    <ul> 
+                       <ul>
+                           <li class="crate_type">
+                       <label for="crate_type">Type of crate</label>
+                       <select name="crate_type" id="crate_type">
+                           <option>Minimal-No plywood</option>
+                           <option>Fully enclosed</option>
+                          
+                       </select>
+                    </li>
                         <li>
                     <label for="new">Number of new boxes</label>
                     <input type="number" min="1" id="new" name="new"></input>
@@ -31,12 +42,13 @@
                     </ul>
                     <div class="button-box">
                        <button class="a" onclick="clicky()">Calculate</button>
-                       <button class="reset">Reset</button>
-                       <fieldset>
-                           <legend>Unboxed? Click here</legend>
-                       <a href="unboxed.html"><button class="linkedpage">Click</button></a>
-                       </fieldset>
+                       <button class="reset">Clear</button>
                     </div>
+                      
+                           
+                       <a href="unboxed.html"><button class="linkedpage">Click here if unboxed</button></a>
+                       
+                   
                     
                    </div>  
 

@@ -11,8 +11,27 @@ body {
 .header {
     height: 80px;
     width: 100%;
+    background-color: rgb(29, 29, 48);
+    display: flex;
+    justify-content: center;
+
+}
+
+input[type="search"], .search {
+    color: rgb(214, 214, 214);
+    height: fit-content;
+    width: fit-content;
     
-    background-color: rgb(23, 23, 24);
+    
+    
+   
+}
+
+.search_input {
+    align-self: center;
+    width: fit-content;
+    height: fit-content;
+    margin-left: 600px;
 }
 
 .upper-container {
@@ -45,20 +64,23 @@ body {
 h1 {
     font-size: 26px;
     color: rgb(214, 214, 214);
+    text-shadow: rgb(228, 133, 10)  0px 2px 2px;
     font-weight: bolder;
     text-align: center;
+    align-self: center;
+    justify-self: center;
 }
 
 .main-container {
     background-color: rgb(126, 127, 129);
-    border: solid rgb(95, 95, 95) 4px;
+    border: solid rgb(110, 110, 110) 3px;
     border-radius: 6px;
     border-style: outset;
     width: 900px;
     align-self: center;
     padding: 40px;
     margin-top: 40px;
-    box-shadow: rgb(43, 43, 43) 0px 0px 10px 10px;
+    box-shadow: rgb(63, 63, 63) 0px 0px 10px 10px;
     display: flex;
 }
 
@@ -74,26 +96,27 @@ h1 {
 
 
 .a {
-    width: 300px;
-    height: 60px;
-    background: #3b59ac;
+    width: 150px;
+    height: 70px;
+    background: #0856ff;
     font-size: 28px;
-    border-radius: 10px;
+    border-radius: 50px 0 0 50px;
     box-shadow: grey;
     color: white;
+    margin-right: 2px;
    
 }
 
 .reset {
-    width: 300px;
-    height: 60px;
-    background: #c96023;
+    width: 150px;
+    height: 70px;
+    background: #d66508;
     font-size: 28px;
-    border-radius: 10px;
+    border-radius: 0 50px 50px 0;
     box-shadow: grey;
     color: white;
-    margin-top: 5px;
-    margin-bottom: 15px;
+    margin-left: 2px;
+  
 }
 
 .input-container {
@@ -102,8 +125,9 @@ h1 {
     height: fit-content;
     width:fit-content;
     flex-direction: column;
-    border: solid rgb(61, 61, 61) 1px;
+    border: solid rgb(245, 245, 245) 2px;
     border-radius: 6px;
+    border-style: outset;
     justify-content: center;
     align-items:center;
     
@@ -122,8 +146,14 @@ h1 {
 
 
 
-.linked-page {
- margin-bottom: 30px;
+.linkedpage {
+ margin-top: 10px;
+ height: 50px;
+ border: solid white 2px;
+ border-style: outset;
+
+ background-color: rgb(235, 235, 235);
+
  
 }
 
@@ -179,7 +209,7 @@ input[type="number"] {
     font-size: 22px;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Montserrat', sans-serif;
     
 
 }
@@ -193,8 +223,11 @@ ul {
       height: 150px;
       width: 340px;
       display: flex;
-      flex-direction: column;
+      
       align-items: center;
+      justify-content: center;
+      border: solid white 2px;
+      border-style: outset;
       
       
   }
@@ -215,4 +248,6 @@ ul {
       color:rgb(95, 95, 95)
   }
 
-  
+  li.crate_type {
+      margin-bottom: 20px;
+  }

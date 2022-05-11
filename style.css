@@ -13,9 +13,16 @@ body {
     width: 100%;
     background-color: rgb(29, 29, 48);
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 
 }
+
+.empty {
+    height: auto;
+    width: 300px;
+  
+}
+
 
 input[type="search"], .search {
     color: rgb(214, 214, 214);
@@ -31,21 +38,10 @@ input[type="search"], .search {
     align-self: center;
     width: fit-content;
     height: fit-content;
-    margin-left: 600px;
+    
 }
 
 .upper-container {
-     
-    width: 100%;
-    height: 400px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.upper-containerTwo {
      
     width: 100%;
     height: 400px;
@@ -60,13 +56,11 @@ input[type="search"], .search {
 
 
 
-
 h1 {
     font-size: 26px;
-    color: rgb(214, 214, 214);
+    color: white;
     text-shadow: rgb(228, 133, 10)  0px 2px 2px;
     font-weight: bolder;
-    text-align: center;
     align-self: center;
     justify-self: center;
 }
@@ -100,7 +94,7 @@ h1 {
     height: 70px;
     background: #0856ff;
     font-size: 28px;
-    border-radius: 50px 0 0 50px;
+    border-radius: 20px 0 0 20px;
     box-shadow: grey;
     color: white;
     margin-right: 2px;
@@ -112,7 +106,7 @@ h1 {
     height: 70px;
     background: #d66508;
     font-size: 28px;
-    border-radius: 0 50px 50px 0;
+    border-radius: 0 20px 20px 0;
     box-shadow: grey;
     color: white;
     margin-left: 2px;
@@ -130,9 +124,22 @@ h1 {
     border-style: outset;
     justify-content: center;
     align-items:center;
-    
     padding: 20px;
     
+}
+
+.input-container2 {
+    background-color: rgb(235, 235, 235);
+    display: flex;
+    height: fit-content;
+    width:fit-content;
+    flex-direction: column;
+    border: solid rgb(245, 245, 245) 2px;
+    border-radius: 6px;
+    border-style: outset;
+    justify-content: center;
+    align-items:center;
+    padding: 20px;
 }
 
 .box-number{
@@ -157,21 +164,6 @@ h1 {
  
 }
 
-.bases {
-    color: rgb(0, 0, 0);
-    
-}
-
-.mids{
-    color: rgb(0, 0, 0);
-    margin-right: 25px;
-}
-
-
-.tips {
-    color: rgb(0, 0, 0); 
-    margin-right: 26px;
-}
 
 #result {
   margin-right: 10px;
@@ -251,3 +243,14 @@ ul {
   li.crate_type {
       margin-bottom: 20px;
   }
+
+  #tips {
+      margin-top: 20px;
+      margin-left: 12px;
+  }
+
+  #mids {
+      margin-top: 20px;
+      margin-left: 9px;
+  }
+

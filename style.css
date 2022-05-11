@@ -70,7 +70,7 @@ h1 {
     border: solid rgb(110, 110, 110) 3px;
     border-radius: 6px;
     border-style: outset;
-    width: 900px;
+    width: fit-content;
     align-self: center;
     padding: 40px;
     margin-top: 40px;

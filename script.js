@@ -1,11 +1,35 @@
+function turnPage() {
+  document.getElementById('input1').style.display = "none";
+  document.getElementById('input2').style.display = "flex";
+  document.querySelector('.unboxed').setAttribute('id', 'unboxed');
+  document.querySelector('.boxed').removeAttribute('id', 'boxed');
+  
+}
 
+function turnPage2() {
+  document.getElementById('input2').style.display = "none"; 
+  document.getElementById('input1').style.display = "flex";
+  document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
+  document.querySelector('.boxed').setAttribute('id', 'boxed');
+}
+
+
+
+
+
+
+
+document.querySelector('.unboxed').addEventListener('click', turnPage);
+document.querySelector('.boxed').addEventListener('click', turnPage2);
 document.getElementsByClassName("clicky").onclick = function() {clicky()}
 
-document.getElementById("height").innerHTML =  '0';
+  document.getElementById("height").innerHTML =  '0';
   document.getElementById("width").innerHTML =  '0';
   document.getElementById("length").innerHTML = '0';
   document.getElementById("2x4").innerHTML =  '0';
   document.getElementById("ply").innerHTML = '0';
+  document.getElementById("pallets").innerHTML = '0';
+  document.getElementById("crate_num").innerHTML = '0';
 
 
 function clicky() {
@@ -23,6 +47,10 @@ document.querySelector('.reset').addEventListener('click', function() {
  // obtains value of text fields and asigns them to newBoxes and oldBoxes variables //
  let newBoxes = document.getElementById("new").value; 
  let oldBoxes = document.getElementById("old").value;
+ 
+ let select = document.getElementById('crate_type');
+ let minimal = select.options[select.selectedIndex].value;
+
  
 
 // if both box types are entered return appropriate values 
@@ -60,7 +88,7 @@ switch (reference) {
 // to make things more elegant, make a default crate size where needed instead of repeating, then make indiviual parameters for differences in wood amount.
 // use boolean values to reduce repetition. example: if boxes <= a certain number, return the shared value
 
-else if (newBoxes) {
+else if (newBoxes && minimal === 'Fully enclosed') {
 switch (newBoxes) {        // try boolean values: i. e, if user inputs value >= a specific number, return appropriate values
    case '1':
     document.getElementById("length").innerHTML = "16'";
@@ -68,6 +96,7 @@ switch (newBoxes) {        // try boolean values: i. e, if user inputs value >= 
     document.getElementById("height").innerHTML = '15"';
     document.getElementById("2x4").innerHTML = '42 feet';
     document.getElementById("ply").innerHTML = 'None';
+    document.getElementById("crate_num").innerHTML = '1';
     break;
    case '2':
     document.getElementById("result1").innerHTML = '12x16';

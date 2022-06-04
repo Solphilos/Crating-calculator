@@ -1,9 +1,11 @@
+resetValues();
+
+
 function turnPage() {
   document.getElementById('input1').style.display = "none";
   document.getElementById('input2').style.display = "flex";
   document.querySelector('.unboxed').setAttribute('id', 'unboxed');
   document.querySelector('.boxed').removeAttribute('id', 'boxed');
-  
 }
 
 function turnPage2() {
@@ -14,15 +16,16 @@ function turnPage2() {
 }
 
 
+function showInput() {
+  document.getElementById('result-panel').style.display = "none";      // hides result table
+  document.getElementById('input1').style.display = 'flex';            // displays boxed input element
+  document.getElementById('tabs').style.display = 'inline';            // displays tabs  
+  document.getElementById('input2').style.display = 'none';
+  document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
+  document.querySelector('.boxed').setAttribute('id', 'boxed');
+}
 
-
-
-
-
-document.querySelector('.unboxed').addEventListener('click', turnPage);
-document.querySelector('.boxed').addEventListener('click', turnPage2);
-document.getElementsByClassName("clicky").onclick = function() {clicky()}
-
+function resetValues() {
   document.getElementById("height").innerHTML =  '0';
   document.getElementById("width").innerHTML =  '0';
   document.getElementById("length").innerHTML = '0';
@@ -30,19 +33,25 @@ document.getElementsByClassName("clicky").onclick = function() {clicky()}
   document.getElementById("ply").innerHTML = '0';
   document.getElementById("pallets").innerHTML = '0';
   document.getElementById("crate_num").innerHTML = '0';
+}
+
+document.querySelector('.unboxed').addEventListener('click', turnPage);
+document.querySelector('.boxed').addEventListener('click', turnPage2);
+
+
 
 
 function clicky() {
-
-document.querySelector('.reset').addEventListener('click', function() { 
-  document.getElementById("height").innerHTML =  '0';
-  document.getElementById("width").innerHTML =  '0';
-  document.getElementById("length").innerHTML = '0';
-  document.getElementById("2x4").innerHTML =  '0';
-  document.getElementById("ply").innerHTML = '0';
+  document.getElementById('input1').style.display = 'none';      
+  document.getElementById('input2').style.display = 'none';    
+  document.getElementById('tabs').style.display = 'none';
+  document.getElementById('result-panel').style.display = "block";
+  document.querySelector('.reset').addEventListener('click', function() { 
+  showInput();
+  resetValues();
   document.querySelector('input[name="new"]').value = '';
   document.querySelector('input[name="old"]').value = '';
-})
+});
    
  // obtains value of text fields and asigns them to newBoxes and oldBoxes variables //
  let newBoxes = document.getElementById("new").value; 
@@ -74,7 +83,7 @@ switch (reference) {
    break;
 
 
-
+   
 
 
 

@@ -25,26 +25,33 @@
 
     <div class="main-container">
         <div class="upper-container">
-            <div>
+            <div id="tabs">
               <button class="boxed" id="boxed">Boxed gates</button>
               <button class="unboxed">Unboxed gates</button>
+              
               <div class="input-container" id="input1">
                   <div class="input_fields">
-                      <div>
-                          <label for="crate_type">Type of crate</label>
+                      <div class="box_bar">
+                          TYPE OF CRATE
+                     </div>
+                      <div class="select_crt">
+                          <label for="crate_type" class="type_label">How should product be crated?</label>
                           <select name="crate_type" id="crate_type">
-                              <option>Minimal-No plywood</option>
+                              <option>Choose one</option>
+                              <option>Minimal - No plywood</option>
                               <option>Fully enclosed</option>
-
-                          </select>
+                            </select>
+                        </div>
+                        <div class="box_bar">
+                            NUMBER OF BOXES
                         </div>
                       <div>
-                          <label for="new">Number of new boxes</label>
-                          <input type="number" min="1" id="new" name="new"></input>
+                          <label for="new">How many new boxes?</label>
+                          <input type="number" min="1" id="new" name="new" required></input>
                       </div>
                       <div>
-                          <label for="old">Number of old boxes</label>
-                          <input type="number" min="1" id="old" name="old" style="margin-left: 8px"></input>
+                          <label for="old">How many old boxes?</label>
+                          <input type="number" min="1" id="old" name="old" style="margin-left: 8px" required></input>
                       </div>
                 </div>
             
@@ -56,40 +63,86 @@
             <div class="input-container2" id="input2">
 
                 <div class="input_field2">
+                    <div class="box_bar">Base sections</div>
                     <div>
                         <label for="bases">Number of bases</label>
                         <input type="number" id="bases" name="bases">
                     </div>
-                    <div>
-                        <input type="radio" id="alum" name="type">Alum
-                        <input type="radio" id="fiberglass" name="type">F/G
-                        <input type="radio" id="section_length" name="bases">16'
-                        <input type="radio" id="section_length" name="bases">21'
-                        <input type="radio" name="bases">24'
+                    <div class="sect_specs">
+                        
+                        <div class="material">
+                            <div class="section_head">
+                               Material
+                            </div>
+                            <div>
+                               <input type="radio" id="alum" name="type">Alum
+                               <input type="radio" id="fiberglass" name="type">F/G
+                            </div>   
+                        </div>
+                       
+                        
+                        <div class="length">
+                            <div class="section_head">
+                                Section length:
+                            </div>    
+                            <div>
+                               <input type="radio" id="section_length" name="bases">16'
+                               <input type="radio" id="section_length" name="bases">21'
+                               <input type="radio" name="bases">24'
+                            </div>   
+                        </div>
                     </div>
-                    <div class="borderline"></div>
+                    <div class="box_bar">Midsections / 2nds</div>
                     <div>
                         <label for="mids">Number of 2nds</label>
                         <input type="number" id="mids">
                     </div>
-                    <div>
-                        <input type="radio" id="alum">Alum
-                        <input type="radio" id="fiberglass">F/G
-                        <input type="radio" id="section_length">9'6"
-                        <input type="radio" id="section_length">12'
-                        <input type="radio">16'
+                    <div class="sect_specs">
+                         <div class="material">
+                            <div class="section_head">
+                                Material
+                            </div>
+                            <div>
+                              <input type="radio" id="alum">Alum
+                              <input type="radio" id="fiberglass">F/G
+                            </div> 
+                        </div>
+                        <div class="length">  
+                              <div class="section_head">
+                                  Section length:
+                              </div>   
+                              <div>
+                                  <input type="radio" id="section_length">9'6"
+                                  <input type="radio" id="section_length">12'
+                                  <input type="radio">16'
+                              </div>  
+                        </div>       
                     </div>
-                    <div class="borderline"></div>
+                    <div class="box_bar">3rds / Tips</div>
                     <div>
                         <label for="tips">Number of 3rds</label>
                         <input type="number" id="tips">
                     </div>
-                    <div>
-                        <input type="radio" id="alum">Alum
-                        <input type="radio" id="fiberglass">F/G
-                        <input type="radio" id="section_length">8'
-                        <input type="radio" id="section_length">12'
-                        <input type="radio">16'
+                    <div class="sect_specs">
+                        <div class="material">
+                            <div class="section_head">
+                                Material
+                            </div>
+                            <div>
+                              <input type="radio" id="alum">Alum
+                              <input type="radio" id="fiberglass">F/G
+                            </div>
+                        </div>
+                        <div class="length">
+                            <div class="section_head">
+                                Section length:
+                            </div>    
+                              <div>
+                                 <input type="radio" id="section_length">8'
+                                 <input type="radio" id="section_length">12'
+                                 <input type="radio">16'
+                              </div>  
+                        </div>     
                     </div>
                 </div>
             </div>
@@ -98,7 +151,7 @@
 
 
 
-            <div class="result-panel">
+            <div class="result-panel" id="result-panel">
                 <table>
                     <tr>
                         <th colspan="2" style="background-color: rgb(163, 219, 163);"># of crates</th>
@@ -134,11 +187,12 @@
 
         </div>
 
-        <div class="button-box">
-            <button class="a" onclick="clicky()">Calculate</button>
-            <button class="reset">Clear</button>
-        </div>
+      
 
+    </div>
+    <div class="button-box">
+        <button type="submit" class="a" onclick="clicky()">Calculate</button>
+        <button class="reset">Clear</button>
     </div>
 
     <div class="footer">

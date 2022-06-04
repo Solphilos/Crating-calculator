@@ -1,5 +1,5 @@
 :root {
-    --main-bg-color: rgb(148, 148, 148);
+    --main-bg-color: rgb(34, 33, 33);
     --blue-vibrant: #2563eb;
     --blue-dark: #1e3a8a;
     --blue-light: #93c5fd;
@@ -99,23 +99,23 @@ input[type="search"], .search {
 
 .boxed, .unboxed {
     color: grey;
-    background-color: rgb(182, 180, 180);
+    background-image: linear-gradient(rgb(235, 235, 235),rgb(141, 140, 140)) ;
     height: 50px;
     width: 160px;
     font-size: 1rem;
     font-weight: bold;
-    outline: none;
-    border: solid white 1px 1px 1px 0px;
-    border-style: none;
+    outline: 0;
+    border: none;
     border-radius: 6px 6px 0px 0px;
 }
 
 
 
 #boxed, #unboxed {
-    background-color: rgb(235, 235, 235);
+    background: rgb(235, 235, 235);
     color: rgb(187, 35, 35);
-    text-decoration: underline rgb(187, 35, 35) ;
+    text-decoration: underline rgb(187, 35, 35);
+   
     
 }
 
@@ -359,9 +359,6 @@ input[type="number"] {
     margin-top: 5px;
     margin-bottom: 5px;
     font-family: 'Roboto', 'Montserrat', sans-serif;
-    
-    
-
 }
 
 ul {

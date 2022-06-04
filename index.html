@@ -26,9 +26,15 @@
     <div class="main-container">
         <div class="upper-container">
             <div id="tabs">
-              <button class="boxed" id="boxed">Boxed gates</button>
+              <button class="home" id="home">Home</button>  
+              <button class="boxed">Boxed gates</button>
               <button class="unboxed">Unboxed gates</button>
-              
+              <div class="homepage" id="homepage">
+                  <div class="home_title">
+                      <div class="title_bar"><h1><em>NEG</em> CRATE CALCULATOR</h1>
+                      </div>
+                  </div>
+              </div>
               <div class="input-container" id="input1">
                   <div class="input_fields">
                       <div class="box_bar">
@@ -36,7 +42,7 @@
                      </div>
                       <div class="select_crt">
                           <label for="crate_type" class="type_label">How should product be crated?</label>
-                          <select name="crate_type" id="crate_type">
+                          <select name="crate_type" id="crate_type" required>
                               <option>Choose one</option>
                               <option>Minimal - No plywood</option>
                               <option>Fully enclosed</option>
@@ -67,6 +73,9 @@
                     <div>
                         <label for="bases">Number of bases</label>
                         <input type="number" id="bases" name="bases">
+                        <label for="sleeved">Sleeved?</label>
+                        <input type="radio" name="sleeved">Yes
+                        <input type="radio" name="sleeved">No
                     </div>
                     <div class="sect_specs">
                         
@@ -152,6 +161,7 @@
 
 
             <div class="result-panel" id="result-panel">
+                <div id="blank"></div>
                 <table>
                     <tr>
                         <th colspan="2" style="background-color: rgb(163, 219, 163);"># of crates</th>

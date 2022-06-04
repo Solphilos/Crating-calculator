@@ -4,15 +4,30 @@ resetValues();
 function turnPage() {
   document.getElementById('input1').style.display = "none";
   document.getElementById('input2').style.display = "flex";
+  document.getElementById('homepage').style.display = "none"
   document.querySelector('.unboxed').setAttribute('id', 'unboxed');
   document.querySelector('.boxed').removeAttribute('id', 'boxed');
+  document.querySelector('.home').removeAttribute('id', 'home');
+
 }
 
 function turnPage2() {
   document.getElementById('input2').style.display = "none"; 
   document.getElementById('input1').style.display = "flex";
+  document.getElementById('homepage').style.display = "none"
   document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
   document.querySelector('.boxed').setAttribute('id', 'boxed');
+  document.querySelector('.home').removeAttribute('id', 'home');
+}
+
+function turnpageHome() {
+  document.getElementById('input2').style.display = "none"; 
+  document.getElementById('input1').style.display = "none";
+  document.getElementById('homepage').style.display = "flex";
+  document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
+  document.querySelector('.boxed').removeAttribute('id', 'boxed');
+  document.querySelector('.home').setAttribute('id', 'home');
+  
 }
 
 
@@ -37,6 +52,7 @@ function resetValues() {
 
 document.querySelector('.unboxed').addEventListener('click', turnPage);
 document.querySelector('.boxed').addEventListener('click', turnPage2);
+document.querySelector('.home').addEventListener('click', turnpageHome);
 
 
 
@@ -53,6 +69,20 @@ function clicky() {
   document.querySelector('input[name="old"]').value = '';
 });
    
+
+function popResults(length, width, height, boards, ply, crate_num) {
+    document.getElementById("length").innerHTML = length;    
+    document.getElementById("width").innerHTML = width;     
+    document.getElementById("height").innerHTML = height;
+    document.getElementById("2x4").innerHTML = boards;
+    document.getElementById("ply").innerHTML = ply;
+    document.getElementById("crate_num").innerHTML = crate_num;
+};
+
+
+
+
+
  // obtains value of text fields and asigns them to newBoxes and oldBoxes variables //
  let newBoxes = document.getElementById("new").value; 
  let oldBoxes = document.getElementById("old").value;
@@ -81,13 +111,7 @@ switch (reference) {
    case '21':
    document.getElementById("result1").innerHTML = 'combo test 3';
    break;
-
-
-   
-
-
-
-}
+  }
  }
 
  
@@ -99,28 +123,23 @@ switch (reference) {
 
 else if (newBoxes && minimal === 'Fully enclosed') {
 switch (newBoxes) {        // try boolean values: i. e, if user inputs value >= a specific number, return appropriate values
-   case '1':
-    document.getElementById("length").innerHTML = "16'";
-    document.getElementById("width").innerHTML = '12"';
-    document.getElementById("height").innerHTML = '15"';
-    document.getElementById("2x4").innerHTML = '42 feet';
-    document.getElementById("ply").innerHTML = 'None';
-    document.getElementById("crate_num").innerHTML = '1';
+   case '1': 
+      popResults(16, 12, 15, 42, 0, 1);
     break;
-   case '2':
-    document.getElementById("result1").innerHTML = '12x16';
-     break;
-   case '3':
-    document.getElementById("result1").innerHTML = '12x16';
-     break;
+     case '2':
+      popResults(16, 12, 15, 42, 0, 1);
+       break;
+     case '3':
+      popResults(16, 12, 18, 42, 0, 1);
+       break;
      case '4':
-      document.getElementById("result1").innerHTML = '12x16';
+      popResults(16, 12, 15, 42, 0, 1);
        break;
      case '5':
-      document.getElementById("result1").innerHTML = '12x16';
+      popResults(16, 12, 15, 42, 0, 1);
        break;
      case '6':
-       document.getElementById("result1").innerHTML ='12x16';
+      popResults(16, 12, 15, 42, 0, 1);
        break; }
 
 }

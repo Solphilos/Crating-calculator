@@ -76,7 +76,8 @@ input[type="search"], .search {
     height: fit-content;
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+ 
 }
 
 .search_input img {
@@ -97,8 +98,8 @@ input[type="search"], .search {
 
 
 
-.boxed, .unboxed {
-    color: grey;
+.boxed, .unboxed, .home {
+    color: rgb(100, 99, 99);
     background-image: linear-gradient(rgb(235, 235, 235),rgb(141, 140, 140)) ;
     height: 50px;
     width: 160px;
@@ -111,12 +112,60 @@ input[type="search"], .search {
 
 
 
-#boxed, #unboxed {
+
+
+#boxed, #unboxed, #home {
     background: rgb(235, 235, 235);
     color: rgb(187, 35, 35);
     text-decoration: underline rgb(187, 35, 35);
    
     
+}
+
+#homepage {
+    background-color: rgb(235, 235, 235);
+    height: 520px;
+    width: 680px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.home_title {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border: solid white 2px;
+    border-style: outset;
+    border-radius: 4px;
+  
+}
+
+h1 {
+    font-size: 26px;
+    color: var(--blue-dark);
+    font-weight: bolder;
+   
+}
+
+h1 em {
+    color: #F37021;
+}
+
+.title_bar {
+    background-color: #CCD4DD;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
 }
 
 
@@ -134,7 +183,7 @@ input[type="search"], .search {
 
 .input-container {
     background-color: rgb(235, 235, 235);
-    display: flex;
+    display: none;
     height: 500px;
     width: 600px;
     flex-direction: column;
@@ -152,8 +201,9 @@ input[type="search"], .search {
     align-items: center;
     height: 100%;
     width: 100%;
-    border: solid var(--blue-dark) 1px;
-  
+    border: solid white 2px;
+    border-style: outset;
+    border-radius: 4px;
 }
 
 .select_crt {
@@ -180,6 +230,9 @@ input[type="search"], .search {
     background-color: var(--blue-dark);
     width: 100%;
     height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
     font-size: 2rem;
     font-weight: bold;
@@ -209,7 +262,9 @@ input[type="search"], .search {
     align-items: center;
     height: 100%;
     width: 100%;
-    border: solid var(--blue-dark) 1px;
+    border: solid white 2px;
+    border-style: outset;
+    border-radius: 4px;
    
 }
 
@@ -233,6 +288,7 @@ input[type="search"], .search {
     width: 100%;
     height: 100%;
     text-align: center;
+   
 }
 
 .borderline {
@@ -246,17 +302,6 @@ input[type="search"], .search {
     display: flex;
     flex-direction: column; 
 }
-
-
-h1 {
-    font-size: 26px;
-    color: white;
-    text-shadow: rgb(228, 133, 10)  0px 2px 2px;
-    font-weight: bolder;
-    align-self: center;
-    justify-self: center;
-}
-
 
 
 
@@ -336,12 +381,18 @@ h1 {
  
 }
 
-
+#blank {
+    height: 50px;
+    width: 100%;
+    background-color: var(--main-bg-color);
+}
 
 table {
     border-collapse: collapse;
     border: solid rgb(71, 71, 71) 1px;
-    width: 100%;
+    height: 520px;
+    width: 680px;
+    border-radius: 6px;
 }
 
 

@@ -5,9 +5,11 @@ function turnPage() {
   document.getElementById('input1').style.display = "none";
   document.getElementById('input2').style.display = "flex";
   document.getElementById('homepage').style.display = "none"
+  document.getElementById('totals_window').style.display = "none";
   document.querySelector('.unboxed').setAttribute('id', 'unboxed');
   document.querySelector('.boxed').removeAttribute('id', 'boxed');
   document.querySelector('.home').removeAttribute('id', 'home');
+  document.querySelector('.totals').removeAttribute('id', 'totals')
 
 }
 
@@ -15,29 +17,44 @@ function turnPage2() {
   document.getElementById('input2').style.display = "none"; 
   document.getElementById('input1').style.display = "flex";
   document.getElementById('homepage').style.display = "none"
+  document.getElementById('totals_window').style.display = "none";
   document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
   document.querySelector('.boxed').setAttribute('id', 'boxed');
   document.querySelector('.home').removeAttribute('id', 'home');
+  document.querySelector('.totals').removeAttribute('id', 'totals')
 }
 
 function turnpageHome() {
   document.getElementById('input2').style.display = "none"; 
   document.getElementById('input1').style.display = "none";
   document.getElementById('homepage').style.display = "flex";
+  document.getElementById('totals_window').style.display = "none";
   document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
   document.querySelector('.boxed').removeAttribute('id', 'boxed');
   document.querySelector('.home').setAttribute('id', 'home');
+  document.querySelector('.totals').removeAttribute('id', 'totals')
+}
+
+function turnpageResults() {
+  document.getElementById('input2').style.display = "none"; 
+  document.getElementById('input1').style.display = "none";
+  document.getElementById('homepage').style.display = "none"
+  document.getElementById('totals_window').style.display = "flex";
+  document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
+  document.querySelector('.boxed').removeAttribute('id', 'boxed');
+  document.querySelector('.home').removeAttribute('id', 'home');
+  document.querySelector('.totals').setAttribute('id', 'totals');
   
 }
 
 
 function showInput() {
-  document.getElementById('result-panel').style.display = "none";      // hides result table
-  document.getElementById('input1').style.display = 'flex';            // displays boxed input element
+  document.getElementById('totals_window').style.display = "none";      // hides result table
+  document.getElementById('homepage').style.display = "flex";          
   document.getElementById('tabs').style.display = 'inline';            // displays tabs  
   document.getElementById('input2').style.display = 'none';
   document.querySelector('.unboxed').removeAttribute('id', 'unboxed');
-  document.querySelector('.boxed').setAttribute('id', 'boxed');
+  
 }
 
 function resetValues() {
@@ -53,17 +70,20 @@ function resetValues() {
 document.querySelector('.unboxed').addEventListener('click', turnPage);
 document.querySelector('.boxed').addEventListener('click', turnPage2);
 document.querySelector('.home').addEventListener('click', turnpageHome);
+document.querySelector('.totals').addEventListener('click', turnpageResults)
 
 
 
 
 function clicky() {
-  document.getElementById('input1').style.display = 'none';      
-  document.getElementById('input2').style.display = 'none';    
-  document.getElementById('tabs').style.display = 'none';
-  document.getElementById('result-panel').style.display = "block";
+  //document.getElementById('input1').style.display = 'none';      
+  //document.getElementById('input2').style.display = 'none';    
+  //document.getElementById('tabs').style.display = 'none';
+  //document.getElementById('homepage').style.display = 'none';
+  //document.getElementById('result-panel').style.display = "block";
+  turnpageResults();
   document.querySelector('.reset').addEventListener('click', function() { 
-  showInput();
+  // showInput()
   resetValues();
   document.querySelector('input[name="new"]').value = '';
   document.querySelector('input[name="old"]').value = '';

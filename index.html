@@ -26,14 +26,27 @@
     <div class="main-container">
         <div class="upper-container">
             <div id="tabs">
-              <button class="home" id="home">Home</button>  
-              <button class="boxed">Boxed gates</button>
-              <button class="unboxed">Unboxed gates</button>
-              <button class="totals">Results</button>
+              <button class="home" id="home"><img src="icons/home.svg">Home</button>  
+              <button class="boxed"><img src="icons/boxed.svg">Boxed gates</button>
+              <button class="unboxed"><img src="icons/unboxed.svg">Unboxed gates</button>
+              <button class="totals"><img src="icons/checkbox-marked-circle-outline.svg"> Results</button>
               <div class="homepage" id="homepage">
                   <div class="home_title">
-                      <div class="title_bar"><h1><em>NEG</em> CRATE CALCULATOR</h1>
+                      <div class="title_bar">
+                          <h1><em>NEG</em> CRATE CALCULATOR</h1>
                       </div>
+                      <div class="inst_box">
+                      <div class="instructions">
+                          <p>Step 1 -<br> Choose Unboxed or Boxed gates tab to get started.</p>
+                      </div>
+                      <div class="instructions">
+                          <p>Step 2 -<br> Complete each field in window for accurate results.</p>
+                      </div>
+                      <div class="instructions">
+                          <p>Step 3 -<br> Click the calculate button to get results. Click clear button to reset fields.</p>
+                      </div>
+                      </div>
+
                   </div>
               </div>
               <div class="input-container" id="input1">
@@ -160,7 +173,7 @@
 
 
              
-            
+            <div id="totals_window">
             <div class="result-panel" id="result-panel">
                 
                 <table>
@@ -169,10 +182,10 @@
                         <td id="crate_num" colspan="2"></td>
                     </tr>
                     <tr>
-                        <th rowspan="2" style="background-color: rgb(214, 224, 255);">Dimensions</th>
-                        <th style="background-color: rgb(214, 224, 255);">Length</th>
-                        <th style="background-color: rgb(214, 224, 255);">Width</th>
-                        <th style="background-color: rgb(214, 224, 255);">Height</th>
+                        <th rowspan="2" style="background-color: rgb(171, 182, 214);">Dimensions</th>
+                        <th style="background-color: rgb(171, 182, 214);">Length</th>
+                        <th style="background-color: rgb(171, 182, 214);">Width</th>
+                        <th style="background-color: rgb(171, 182, 214);">Height</th>
                     </tr>
                     <tr>
                         <td id="length"></td>
@@ -180,10 +193,10 @@
                         <td id="height"></td>
                     </tr>
                     <tr>
-                        <th rowspan="2" colspan="1" style="background-color: rgb(231, 222, 182)">Materials</th>
-                        <th style="background-color: rgb(231, 222, 182)">2x4</th>
-                        <th style="background-color: rgb(231, 222, 182)">Plywood</th>
-                        <th style="background-color: rgb(231, 222, 182)">Pallets</th>
+                        <th rowspan="2" colspan="1" style="background-color: rgb(209, 192, 114)">Materials</th>
+                        <th style="background-color: rgb(209, 192, 114)">2x4</th>
+                        <th style="background-color: rgb(209, 192, 114)">Plywood</th>
+                        <th style="background-color: rgb(209, 192, 114)">Pallets</th>
                     </tr>
                     <tr>
                         <td id="2x4"></td>
@@ -193,6 +206,7 @@
                  </table>
 
 
+            </div>
             </div>
       </div>
 

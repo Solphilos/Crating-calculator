@@ -6,7 +6,7 @@
     --neg-blue: #24507C;
     --neg-orange: #F37021;
     --window-grey: #4b4b4b;
-    
+    --neg-silver: #CCD4DD;
 
 }
 
@@ -112,6 +112,8 @@ input[type="search"], .search {
     outline: 0;
     border: none;
     border-radius: 6px 6px 0px 0px;
+    
+    
 }
 
 
@@ -135,6 +137,13 @@ input[type="search"], .search {
 }
 
 
+button img[src^="icons"] {
+    height: 22px;
+    position: relative;
+    top: 4px;
+    right: 6px;
+}
+
 
 #homepage {
     background-color: var(--window-grey);
@@ -151,8 +160,9 @@ input[type="search"], .search {
     width: 96%;
     height: 96%;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     border: solid #707070 2px;
     border-style: outset;
     border-radius: 4px;
@@ -186,6 +196,28 @@ h1 em {
     
 }
 
+.inst_box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 90%;
+    
+}
+
+.instructions {
+    height: 80px;
+    width: 460px;
+    border: solid  #dae2eb 2px;
+    border-style: outset;
+    border-radius: 6px;
+}
+
+.instructions p {
+    margin-left: 20px;
+}
 
 .upper-container {
     width: 100%;
@@ -405,13 +437,25 @@ h1 em {
    
 }
 
-
+#totals_window {
+    background-color: var(--window-grey);
+    display: none;
+    height: 520px;
+    width: 680px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0px 6px 6px 6px;
+    justify-content: center;
+   
+}
 
 .result-panel {
-  display: none;
-  background: white;
-  width: fit-content;
-  height: fit-content;
+  display: flex;
+  background: var(--neg-silver);
+  justify-content: center;
+  align-items: center;
+  width: 96%;
+  height: 96%;
  
 }
 
@@ -423,19 +467,20 @@ h1 em {
 
 table {
     border-collapse: collapse;
-    border: solid rgb(71, 71, 71) 1px;
-    height: 520px;
-    width: 680px;
+    height: 100%;
+    width: 100%;
     border-radius: 6px;
 }
 
 
 
 tr, th, td {
-    border: solid black 1px;
+    border: solid var(--main-bg-color) 1px;
     padding: 30px;
     text-align: center;
 }
+
+
 
 input[type="number"] {
     width: 100px;

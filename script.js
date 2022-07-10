@@ -1,5 +1,4 @@
 // tab navigation control 
-
 tabNav = (() => {
   const input1 = document.getElementById('input1');
   const input2 = document.getElementById('input2');
@@ -9,9 +8,9 @@ tabNav = (() => {
   const boxed = document.querySelector('.boxed');
   const home = document.querySelector('.home');
   const totals = document.querySelector('.totals');
-  const tabs =  document.getElementById('tabs');
+  
 
-
+  // sets properties that allow tabs to display or close windows
   setDisplay = (element1, element2, element3, element4) => {        
     element1.style.display = "none";  
     element2.style.display = "none";
@@ -19,32 +18,37 @@ tabNav = (() => {
     element4.style.display = "flex";         
   }
 
-  setAndRemove = (ele1, ele2, ele3, ele4) => {
-    let id1 = String(ele1);
-    let id2 = String(ele2);
-    let id3 = String(ele3);
-    let id4 = String(ele4);
+  
+  // sets and removes id names for tabs, rendering them active or inactive 
+  setAndRemove = (ele1, ele2, ele3, ele4) => {   
+    let id1 = ele1.className; 
+    let id2 = ele2.className; 
+    let id3 = ele3.className;
+    let id4 = ele4.className;
     ele1.removeAttribute('id', id1);
     ele2.removeAttribute('id', id2);
     ele3.removeAttribute('id', id3)
     ele4.setAttribute('id', id4);
   }
-
+  
+  // "unboxed" tab
   turnPage = () => {
     setDisplay(input1, homepage, totalsWindow, input2)
     setAndRemove(boxed, home, totals, unboxed)
   }
-
+  
+  // "boxed" tab
   turnPage2 = () => {
     setDisplay(input2, homepage, totalsWindow, input1)
     setAndRemove(unboxed, home, totals, boxed)
   }
-
+  // "home" tab
   turnpageHome = () => {
     setDisplay(input2, input1, totalsWindow, homepage)
     setAndRemove(unboxed, boxed, totals, home)
   }
-
+  
+  // "results" tab
   turnpageResults = () => {
     setDisplay(input2, input1, homepage, totalsWindow)
     setAndRemove(unboxed, boxed, home, totals)
@@ -60,7 +64,7 @@ tabNav = (() => {
 
 })();
 
-// return all caculated values back to zero
+// sets table results to zero as default. Also returns all caculated values back to zero.
 resetValues = (() => {
   function reset() {
     document.getElementById("height").innerHTML =  '0';
@@ -78,7 +82,7 @@ resetValues = (() => {
 
 })();
 
-
+// creates click events that allow tab/window navigation.
 addListeners = (() => {
   document.querySelector('.unboxed').addEventListener('click', tabNav.turnPage);
   document.querySelector('.boxed').addEventListener('click', tabNav.turnPage2);
@@ -86,7 +90,7 @@ addListeners = (() => {
   document.querySelector('.totals').addEventListener('click', tabNav.turnpageResults)
 })();
 
-
+// populates the "results" table with calculated results.
 popResults = (length, width, height, boards, ply, crate_num) => {
   document.getElementById("length").innerHTML = length;    
   document.getElementById("width").innerHTML = width;     
@@ -107,7 +111,7 @@ makeResetButton = (() => {
 })();
 
 
-// make this a module 
+// make this a module. Refactor all code below to be more concise.  
 function clicky() {
   let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
   let oldBoxes = document.getElementById("old").value;

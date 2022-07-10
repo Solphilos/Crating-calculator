@@ -30,8 +30,6 @@ tabNav = (() => {
     ele4.setAttribute('id', id4);
   }
 
-
-
   turnPage = () => {
     setDisplay(input1, homepage, totalsWindow, input2)
     setAndRemove(boxed, home, totals, unboxed)
@@ -99,95 +97,101 @@ popResults = (length, width, height, boards, ply, crate_num) => {
 }
 
 
+
+makeResetButton = (() => {
+ document.querySelector('.reset').addEventListener('click', function() { 
+    resetValues.reset()
+    document.querySelector('input[name="new"]').value = '';
+    document.querySelector('input[name="old"]').value = '';
+  });
+})();
+
+
+// make this a module 
 function clicky() {
   let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
   let oldBoxes = document.getElementById("old").value;
   let select = document.getElementById('crate_type');
   let minimal = select.options[select.selectedIndex].value;
-
   tabNav.turnpageResults();
-  document.querySelector('.reset').addEventListener('click', function() { 
-    resetValues.reset()
-    document.querySelector('input[name="new"]').value = '';
-    document.querySelector('input[name="old"]').value = '';
-  });
+ 
    
-
-
   if (newBoxes && oldBoxes) {
     // takes the value of both text fields and concatenates them as as string. example: 11 would mean 1 new, 1 old.  1112 would be 11 new, 12 old.
     let reference = newBoxes + oldBoxes;
 
     switch (reference) {
-      case '11':
-        document.getElementById("result1").innerHTML =  'Crate dimensions: 12" wide, 16\' long';
-        document.getElementById("result2").innerHTML = 'Wood used: 52\' of 2x4';
-        document.getElementById("result3").innerHTML = 'another value:';
-      break;
-      case '12': 
-      document.getElementById("result1").innerHTML = 'combo test 2';
-      break;
-      case '21':
-      document.getElementById("result1").innerHTML = 'combo test 3';
-      break;
+      case '1': 
+        popResults(16, 12, 15, 42, 0, 1);
+        break;
+      case '2':
+        popResults(16, 12, 15, 42, 0, 1);
+        break;
+      case '3':
+        popResults(16, 12, 18, 42, 0, 1);
+        break;
+      case '4':
+        popResults(16, 12, 15, 42, 0, 1);
+        break;
+      case '5':
+        popResults(16, 12, 15, 42, 0, 1);
+        break;
+      case '6':
+        popResults(16, 12, 15, 42, 0, 1);
+        break; 
     }
   }
 
- 
 
-// if only new boxes are entered return appropriate values
+  // to make things more elegant, make a default crate size where needed instead of repeating, then make indiviual parameters for differences in wood amount.
+  // use boolean values to reduce repetition. example: if boxes <= a certain number, return the shared value
 
-// to make things more elegant, make a default crate size where needed instead of repeating, then make indiviual parameters for differences in wood amount.
-// use boolean values to reduce repetition. example: if boxes <= a certain number, return the shared value
-
-else if (newBoxes && minimal === 'Fully enclosed') {
-switch (newBoxes) {        // try boolean values: i. e, if user inputs value >= a specific number, return appropriate values
-   case '1': 
-      popResults(16, 12, 15, 42, 0, 1);
-    break;
+  else if (newBoxes && minimal === 'Fully enclosed') {
+   switch (newBoxes) {        // try boolean values: i. e, if user inputs value >= a specific number, return appropriate values
+     case '1': 
+       popResults(16, 12, 15, 42, 0, 1);
+       break;
      case '2':
-      popResults(16, 12, 15, 42, 0, 1);
+       popResults(16, 12, 15, 42, 0, 1);
        break;
      case '3':
-      popResults(16, 12, 18, 42, 0, 1);
+       popResults(16, 12, 18, 42, 0, 1);
        break;
      case '4':
-      popResults(16, 12, 15, 42, 0, 1);
+       popResults(16, 12, 15, 42, 0, 1);
        break;
      case '5':
-      popResults(16, 12, 15, 42, 0, 1);
+       popResults(16, 12, 15, 42, 0, 1);
        break;
      case '6':
-      popResults(16, 12, 15, 42, 0, 1);
-       break; }
-
-}
+       popResults(16, 12, 15, 42, 0, 1);
+       break; 
+    }
+  }
  
-// if only old boxes are entered return appropriate values
-
-else if (oldBoxes) {
-         
- switch (oldBoxes) {
-   case '1':
-    document.getElementById("result1").innerHTML = '12x16-old';
-    break;
-   case '2':
-    document.getElementById("result1").innerHTML = '12x16';
-     break;
-   case '3':
-    document.getElementById("result1").innerHTML = '12x16';
-     break;
+  else if (oldBoxes) {
+   switch (oldBoxes) {      
+     case '1': 
+       popResults(16, 12, 15, 42, 0, 1);
+       break;
+     case '2':
+       popResults(16, 12, 15, 42, 0, 1);
+       break;
+     case '3':
+       popResults(16, 12, 18, 42, 0, 1);
+       break;
      case '4':
-      document.getElementById("result1").innerHTML = '12x16';
+       popResults(16, 12, 15, 42, 0, 1);
        break;
      case '5':
-      document.getElementById("result1").innerHTML = '12x16';
+       popResults(16, 12, 15, 42, 0, 1);
        break;
      case '6':
-       document.getElementById("result1").innerHTML ='12x16';
-       break;
-      }
-}
+       popResults(16, 12, 15, 42, 0, 1);
+       break; 
+    }
+
+  }  
 
 
    

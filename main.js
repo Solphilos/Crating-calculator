@@ -98,27 +98,29 @@ addListeners = (() => {
 
 
   
-   const newBox = {
+  const newBox = {
     width: 6, 
     height: 5,
   }
   const oldBox = {
     width: 11, 
-    height: 5,
+    height: 4.25,
   }
   let newBoxSpread;
   let oldBoxSpread;
   let combinedSpread;
   let skidHeight;
-  let boxAmount;
+  let newAmount;
+  let oldAmount;
   let newRowsHigh;
   let oldRowsHigh;
   let skidWidth;
+ 
   
   
   
   addNewBoxes = (amount) => {                // returns width of specified number of new boxes when placed side by side. 
-    boxAmount = amount;
+    newAmount = amount;
     newBoxSpread = newBox.width * amount;
     return {
       newBoxSpread,
@@ -126,7 +128,7 @@ addListeners = (() => {
   }
   
   addOldBoxes = (amount) => {                // returns width of specified number of old boxes when placed side by side. 
-    boxAmount = amount;
+    oldAmount = amount;
     oldBoxSpread = oldBox.width * amount;
     return {
      oldBoxSpread,
@@ -134,10 +136,10 @@ addListeners = (() => {
   }
   
   boxCombinator = (amountNew, amountOld) => {   // returns the combined width of specified number of old and new boxes. 
-    addNewBoxes(amountNew)
-    addOldBoxes(amountOld)
+    addNewBoxes(amountNew);
+    addOldBoxes(amountOld);
     combinedSpread = newBoxSpread + oldBoxSpread;
-    console.log(combinedSpread)
+    
     return {
       combinedSpread,
     }
@@ -145,46 +147,49 @@ addListeners = (() => {
   
   
   getSkidSize = () => {                       // using the combined width of boxes, returns all crate dimensions and relates specs. 
-    if (combinedSpread > 40) {
+    if (combinedSpread > 40 && combinedSpread < 217) {
       skidWidth = '40x16';
       findCrateHeight(combinedSpread, 40);
-      popResults(skidWidth, skidHeight);
+      popResults(skidWidth, skidHeight + 8);
+         
     } 
     
     else if (combinedSpread > 0 && combinedSpread <= 24) {
-      skidWidth = '12x16'
-      findCrateHeight(combinedSpread, 12)
-      popResults(skidWidth, skidHeight); 
+      skidWidth = '12x16';
+      findCrateHeight(combinedSpread, 12);
+      popResults(skidWidth, skidHeight + 8); 
     }
     
     else if (combinedSpread > 24 && combinedSpread < 40) {
-      skidWidth = '18X18'
-      findCrateHeight(combinedSpread, 18) 
-      popResults(skidWidth, skidHeight);
+      skidWidth = '18X18';
+      findCrateHeight(combinedSpread, 18); 
+      popResults(skidWidth, skidHeight + 8);
+    }
+
+    else if (combinedSpread > 234 || oldBoxSpread > 198) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
+      //startNewSkid()
+      console.log('too much!')
     }
   }
-  
-  
+    
+
+  startNewSkid = () => {
+    if (skidHeight > 38) {
+      let remainder = combinedSpread - 216;
+      combinedSpread = remainder;
+      getSkidSize();
+    }
+  }
   
   findCrateHeight = (amount, crateWidth) => {        // returns number of vertical rows of boxes, old and new. 
     rowsHigh = amount / crateWidth;                  // the total width of all boxes divided by max width of skid returns the number of vertical rows. 
     let x = Math.ceil(rowsHigh);                     // there can be no partial rows, so round the returned number to the next highest interger. 
-    skidHeight = x * 5;                              // multiply the rounded number by height of the box to get height. Wood height to be added later. 
-    console.log(x)
-      
+    skidHeight = x * 5;                              // multiply the rounded number by height of the box to get height. Wood height to be added later.
+                                                       
   }
-  
- // boxCombinator(6, 0)  // call this to input a mix of old and new boxes. Insert a 0 for an unused argument. 
-  // getSkidSize()       // call this to calculate skid size
-  
 
 
- //  this is the input for amount of boxes, new and then old. 
-
- 
-//addNewBoxes(5)  
-//returnDimensions()   // returns skid width, plus height of boxes stacked on top of one another. Does not yet include wood, so not actual skid height yet. 
-
+   
 // include module that controls box type / gate arm length. 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

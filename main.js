@@ -115,6 +115,10 @@ addListeners = (() => {
   let newRowsHigh;
   let oldRowsHigh;
   let skidWidth;
+  let length;
+  let pallets;
+  let twoByFour;
+  let plywood;
  
   
   
@@ -150,20 +154,23 @@ addListeners = (() => {
     if (combinedSpread > 40 && combinedSpread < 217) {
       skidWidth = '40x16';
       findCrateHeight(combinedSpread, 40);
-      popResults(skidWidth, skidHeight + 8);
+      getWoodAmount();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, '2 sheets', 1, 3); // placeholder specs. Make a function to calculate wood.
          
     } 
     
     else if (combinedSpread > 0 && combinedSpread <= 24) {
       skidWidth = '12x16';
       findCrateHeight(combinedSpread, 12);
-      popResults(skidWidth, skidHeight + 8); 
+      getWoodAmount();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, 0, 1, 0); 
     }
     
     else if (combinedSpread > 24 && combinedSpread < 40) {
-      skidWidth = '18X18';
+      skidWidth = '18X16';
       findCrateHeight(combinedSpread, 18); 
-      popResults(skidWidth, skidHeight + 8);
+      getWoodAmount();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, 0, 1, 0);
     }
 
     else if (combinedSpread > 234 || oldBoxSpread > 198) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
@@ -188,19 +195,38 @@ addListeners = (() => {
                                                        
   }
 
+  getWoodAmount = () => {
+    let sideBoards;
+    // if skidWidth = '40x'16  return amount of wood. 59 foot baseline amount 2x4 for 40x16. add ply and side boards, which will vary.
+    if (skidWidth === '40x16') {
+      sideBoards = skidHeight * 8 / 12;
+      twoByFour = sideBoards + 59;
+    }
+    else if (skidWidth === '18x16') {
+      sideBoards = (skidHeight + 3) * 6 / 12;  
+      twoByFour = sideBoards + 50;
+    }
+
+    else if (skidWidth === '12x16') {
+      sideBoards = (skidHeight + 3) * 6 / 12;
+      twoByFour = sideBoards + 44;
+    }
+  }
+
 
    
 // include module that controls box type / gate arm length. 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // populates the "results" table with calculated results.
-popResults = (width, height, length, boards, ply, crate_num) => {
+popResults = (width, height, length, boards, ply, crate_num, pallets) => {
   document.getElementById("width").innerHTML = width;     
   document.getElementById("height").innerHTML = height;
   document.getElementById("length").innerHTML = length;    
   document.getElementById("2x4").innerHTML = boards;
   document.getElementById("ply").innerHTML = ply;
   document.getElementById("amount").innerHTML = crate_num;
+  document.getElementById("pallets").innerHTML = pallets;
 }
 
 

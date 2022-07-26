@@ -1,5 +1,5 @@
-// tab navigation control 
-tabNav = (() => {
+ // tab navigation control
+ tabNav = (() => {
   const input1 = document.getElementById('input1');
   const input2 = document.getElementById('input2');
   const homepage = document.getElementById('homepage');
@@ -63,6 +63,7 @@ tabNav = (() => {
   }
 
 })();
+
 
 // sets table results to zero as default. Also returns all caculated values back to zero.
 resetValues = (() => {
@@ -152,30 +153,33 @@ addListeners = (() => {
   
   getSkidSize = () => {                       // using the combined width of boxes, returns all crate dimensions and relates specs. 
     if (combinedSpread > 40 && combinedSpread < 217) {
-      skidWidth = '40x16';
+      skidWidth = '40"';
       findCrateHeight(combinedSpread, 40);
       getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, '2 sheets', 1, 3); // placeholder specs. Make a function to calculate wood.
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, '2 sheets', 1, 3); 
          
     } 
     
     else if (combinedSpread > 0 && combinedSpread <= 24) {
-      skidWidth = '12x16';
+      skidWidth = '12"';
       findCrateHeight(combinedSpread, 12);
       getWoodAmount();
       popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, 0, 1, 0); 
     }
     
     else if (combinedSpread > 24 && combinedSpread < 40) {
-      skidWidth = '18X16';
+      skidWidth = '18"';
       findCrateHeight(combinedSpread, 18); 
       getWoodAmount();
       popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, 0, 1, 0);
     }
 
     else if (combinedSpread > 234 || oldBoxSpread > 198) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
-      //startNewSkid()
-      console.log('too much!')
+      skidWidth = '40"';
+      findCrateHeight(combinedSpread, 40);   // create a new table to display results for  successive crates.
+      getWoodAmount();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, '2 sheets', 2, 3);
+      startNewSkid();
     }
   }
     
@@ -197,19 +201,27 @@ addListeners = (() => {
 
   getWoodAmount = () => {
     let sideBoards;
-    // if skidWidth = '40x'16  return amount of wood. 59 foot baseline amount 2x4 for 40x16. add ply and side boards, which will vary.
-    if (skidWidth === '40x16') {
+    
+    if (skidWidth === '40"') {
       sideBoards = skidHeight * 8 / 12;
-      twoByFour = sideBoards + 59;
-    }
-    else if (skidWidth === '18x16') {
+      twoByFour = Math.ceil(sideBoards) + 59 + " feet";
+    } 
+    else if (skidWidth === '18"') {
       sideBoards = (skidHeight + 3) * 6 / 12;  
-      twoByFour = sideBoards + 50;
+      twoByFour = Math.ceil(sideBoards) + 50 + " feet";
     }
 
-    else if (skidWidth === '12x16') {
+    else if (skidWidth === '12"') {
       sideBoards = (skidHeight + 3) * 6 / 12;
-      twoByFour = sideBoards + 44;
+      twoByFour = Math.ceil(sideBoards) + 44 + " feet";
+    }
+  }
+
+  getEnclosedValues = () => {
+    let select = document.getElementById('crate_type');
+    let value = select.options[select.selectedIndex].value;
+    if (value === 'Fully enclosed') {
+
     }
   }
 
@@ -252,6 +264,7 @@ function submitInput() {
   tabNav.turnpageResults();
   boxCombinator(newBoxes, oldBoxes);    // this logs the width of boxes laid flat, side by side and the type of crate they would go on
   getSkidSize()
+  
  
 
 

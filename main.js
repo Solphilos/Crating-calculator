@@ -156,37 +156,40 @@ addListeners = (() => {
       skidWidth = '40"';
       findCrateHeight(combinedSpread, 40);
       getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, '2 sheets', 1, 3); 
-         
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, 1, 3); 
     } 
     
     else if (combinedSpread > 0 && combinedSpread <= 24) {
       skidWidth = '12"';
       findCrateHeight(combinedSpread, 12);
       getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, 0, 1, 0); 
+      getEnclosedValues();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, 1, 0); 
     }
     
     else if (combinedSpread > 24 && combinedSpread < 40) {
       skidWidth = '18"';
       findCrateHeight(combinedSpread, 18); 
       getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, 0, 1, 0);
+      getEnclosedValues();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, 1, 0);
     }
 
     else if (combinedSpread > 234 || oldBoxSpread > 198) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
       skidWidth = '40"';
       findCrateHeight(combinedSpread, 40);   // create a new table to display results for  successive crates.
       getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, '2 sheets', 2, 3);
+      getEnclosedValues();
+      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, 2, 3);
       startNewSkid();
     }
   }
-    
 
-  startNewSkid = () => {
-    if (skidHeight > 38) {
-      let remainder = combinedSpread - 216;
+  
+  
+  startNewSkid = () => {                              // figure out how to make this start a new skid. Append data to new table
+    if (skidHeight > 38) {                            // instead of populating data to premade table, use DOM to create new table...
+      let remainder = combinedSpread - 216;           // for each run of the getSkidSize function. 
       combinedSpread = remainder;
       getSkidSize();
     }
@@ -200,30 +203,80 @@ addListeners = (() => {
   }
 
   getWoodAmount = () => {
-    let sideBoards;
+    let sideBoards; 
     
     if (skidWidth === '40"') {
       sideBoards = skidHeight * 8 / 12;
-      twoByFour = Math.ceil(sideBoards) + 59 + " feet";
+      twoByFour = `${Math.ceil(sideBoards) + 59} feet`;
     } 
     else if (skidWidth === '18"') {
       sideBoards = (skidHeight + 3) * 6 / 12;  
-      twoByFour = Math.ceil(sideBoards) + 50 + " feet";
+      twoByFour = `${Math.ceil(sideBoards) + 50} feet`;
     }
 
     else if (skidWidth === '12"') {
       sideBoards = (skidHeight + 3) * 6 / 12;
-      twoByFour = Math.ceil(sideBoards) + 44 + " feet";
+      twoByFour = `${Math.ceil(sideBoards) + 44} feet`;
     }
   }
+
+  getPlyAmount = () => {
+    let sidePanels;
+
+    if (skidWidth === '40"') {
+      sidePanels = skidHeight * 4 / 48;
+      plywood = `${Math.ceil(sidePanels) + 4} sheets`;
+    } 
+    else if (skidWidth === '18"') {
+      sidePanels = skidHeight * 4 / 48;  
+      plywood = Math.ceil(sidePanels) + 1 + " sheets";
+    }
+
+    else if (skidWidth === '12"') {
+      sidePanels = skidHeight * 4 / 48;
+      plywood = Math.ceil(sidePanels) + 1 + " sheets";
+    }
+  }
+
 
   getEnclosedValues = () => {
     let select = document.getElementById('crate_type');
-    let value = select.options[select.selectedIndex].value;
-    if (value === 'Fully enclosed') {
-
+    let values = select.options[select.selectedIndex].value;
+    if (values === 'Fully enclosed') {
+      alert(values)
+      getPlyAmount()
+    }
+    else if (values === 'Minimal - No plywood') {
+       alert(values)
+       plywood = 0; 
     }
   }
+///////////////////////////////////////////////////////////////////
+// DOM table creation:  Save and delete table element from HTML
+let resultPanel = document.getElementById('result-panel');
+let table = document.createElement('TABLE');
+resultPanel.appendChild(table);
+let row1 = document.createElement('TR');
+let row2 = document.createElement('TR');
+let row3 = document.createElement('TR');
+let row4 = document.createElement('TR');
+row1.setAttribute('id', 'row1');
+row2.setAttribute('id', 'row2');
+row3.setAttribute('id', 'row3');
+row4.setAttribute('id', 'row4');
+table.appendChild(row1);
+table.appendChild(row2);
+table.appendChild(row3);
+table.appendChild(row4);
+let tableData1 = document.createElement('TD');
+let tableData2 = document.createElement('TD');
+let tableData3 = document.createElement('TD');
+tableData1.setAttribute('id', 'length');
+tableData2.setAttribute('id', 'width');
+tableData3.setAttribute('id', 'height');
+row2.appendChild(tableData1);
+row2.appendChild(tableData2);
+row2.appendChild(tableData3);
 
 
    
@@ -252,9 +305,7 @@ makeResetButton = (() => {
 })();
 
 
-/* make this a module. Refactor all code below to be more concise.
-   Also build logic to calculate crate dimensions and material for every 
-   additional box added to crate. */
+
    
 function submitInput() {
   let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
@@ -264,16 +315,6 @@ function submitInput() {
   tabNav.turnpageResults();
   boxCombinator(newBoxes, oldBoxes);    // this logs the width of boxes laid flat, side by side and the type of crate they would go on
   getSkidSize()
-  
- 
-
-
-
- 
-  
-
-
-   
 }
 
 

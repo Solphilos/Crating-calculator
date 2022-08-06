@@ -121,11 +121,10 @@ addListeners = (() => {
   let twoByFour;
   let plywood;
   let crateNum = 1;
- 
   
   
   
-  addNewBoxes = (amount) => {                // returns width of specified number of new boxes when placed side by side. 
+  addNewBoxes = (amount) => {                // returns width of specified number of new boxes placed side by side. 
     newAmount = amount;
     newBoxSpread = newBox.width * amount;
     return {
@@ -133,7 +132,7 @@ addListeners = (() => {
     }
   }
   
-  addOldBoxes = (amount) => {                // returns width of specified number of old boxes when placed side by side. 
+  addOldBoxes = (amount) => {                // returns width of specified number of old boxes placed side by side. 
     oldAmount = amount;
     oldBoxSpread = oldBox.width * amount;
     return {
@@ -141,7 +140,7 @@ addListeners = (() => {
     }
   }
   
-  boxCombinator = (amountNew, amountOld) => {   // returns the combined width of specified number of old and new boxes. 
+  boxCombinator = (amountNew, amountOld) => {   // returns the combined width of specified number of old and new boxes placed side by side. 
     addNewBoxes(amountNew);
     addOldBoxes(amountOld);
     combinedSpread = newBoxSpread + oldBoxSpread;
@@ -154,8 +153,8 @@ addListeners = (() => {
   
   getSkidSize = () => {                       // using the combined width of boxes, returns all crate dimensions and relates specs. 
     
-    if (combinedSpread > 40 && combinedSpread < 235) {     // formerly combinedSpread < 217
-      skidWidth = '40"';
+    if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {     /////// work on this. this allows too many old or new boxes to be placed on crate
+      skidWidth = '43"';
       findCrateHeight(combinedSpread, 40);
       getEnclosedValues();
       getWoodAmount();
@@ -178,32 +177,17 @@ addListeners = (() => {
       createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0);
     }
 
-    /* else if (combinedSpread > 234 || oldBoxSpread > 198) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
-      skidWidth = '40"';
-      getEnclosedValues();
-      findCrateHeight(combinedSpread, 40);   // create a new table to display results for  successive crates.
-      getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, 2, 3);
-     // startNewSkid();   this function causing inaccuracy in the math. 
-    }
-
-    else if (newBoxSpread > 216) { 
-      skidWidth = '40"';
-      getEnclosedValues();
-      findCrateHeight(combinedSpread, 40);   
-      getWoodAmount();
-      popResults(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, 2, 3);
-      createTable();
-     // startNewSkid();        // start new skid after figuring out how to create new table for every generation of math results
-    } */
+   
     
     else if (newBoxSpread > 216) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
       let remainder = combinedSpread - 216;
-      combinedSpread = remainder;
-      getSkidSize();
+      combinedSpread = remainder;  
+      newBoxSpread = 0;     
+      getSkidSize();                   
       combinedSpread = 216;
       crateNum += 1;
       getSkidSize();
+      
     }
 
     else if (combinedSpread > 234) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
@@ -218,6 +202,7 @@ addListeners = (() => {
     else if (oldBoxSpread > 198) {
       let remainder = combinedSpread - 198;
       combinedSpread = remainder;
+      oldBoxSpread = 0;
       getSkidSize();
       combinedSpread = 198;
       crateNum += 1;
@@ -250,7 +235,7 @@ addListeners = (() => {
   getWoodAmount = () => {
     let sideBoards; 
     
-    if (skidWidth === '40"') {
+    if (skidWidth === '43"') {
       sideBoards = skidHeight * 8 / 12;
       twoByFour = `${Math.ceil(sideBoards) + 59} feet`;
     } 
@@ -268,7 +253,7 @@ addListeners = (() => {
   getPlyAmount = () => {
     let sidePanels;
 
-    if (skidWidth === '40"') {
+    if (skidWidth === '43"') {
       sidePanels = skidHeight * 4 / 48;
       plywood = `${Math.ceil(sidePanels) + 4} sheets`;
     } 
@@ -288,14 +273,15 @@ addListeners = (() => {
     let select = document.getElementById('crate_type');
     let values = select.options[select.selectedIndex].value;
     if (values === 'Fully enclosed') {
-      alert(values)
       getPlyAmount()
     }
     else if (values === 'Minimal - No plywood') {
-       alert(values)
        plywood = 0; 
     }
   }  
+ ///////////////////////////////Unboxed Gates Caluclator Logic ///////////////////////////////////////////////////////////////////////////////////////
+ 
+ 
 
 
 ///////////////////////////////////////////////////////////////////
@@ -369,13 +355,17 @@ let th7 = document.createElement('TH');
 let th8 = document.createElement('TH');
 th5.rowSpan = "2";
 th5.colSpan = "1";
-th5.style.backgroundColor = "rgb(189, 158, 93)";
+th5.style.backgroundColor = "#817748";
+th5.style.color = "white";
 th5.textContent = "Materials";
-th6.style.backgroundColor = "rgb(189, 158, 93)";
+th6.style.backgroundColor = "#817748";
+th6.style.color = "white";
 th6.textContent = "2x4";
-th7.style.backgroundColor = "rgb(189, 158, 93)";
+th7.style.backgroundColor = "#817748";
+th7.style.color = "white";
 th7.textContent = "Plywood";
-th8.style.backgroundColor = "rgb(189, 158, 93)";
+th8.style.backgroundColor = "#817748";
+th8.style.color = "white";
 th8.textContent = "Pallets";
 row3.appendChild(th5);
 row3.appendChild(th6);
@@ -404,22 +394,6 @@ tdPallet.innerHTML = pallets;
 
 
    
-// include module that controls box type / gate arm length. 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// populates the "results" table with calculated results.
-/*
-popResults = (width, height, length, boards, ply, crate_num, pallets) => {
-  document.getElementById("width").innerHTML = width;     
-  document.getElementById("height").innerHTML = height;
-  document.getElementById("length").innerHTML = length;    
-  document.getElementById("2x4").innerHTML = boards;
-  document.getElementById("ply").innerHTML = ply;
-  document.getElementById("amount").innerHTML = crate_num;
-  document.getElementById("pallets").innerHTML = pallets;
-}  */
-
-
 
 makeResetButton = (() => {
   document.querySelector('.reset').addEventListener('click', function() { 

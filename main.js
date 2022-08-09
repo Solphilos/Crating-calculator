@@ -97,18 +97,29 @@ addListeners = (() => {
    based on amount of boxes. When user inputs number of boxes + box type, return width, length and height
    and amount of wood used.  */
 
-
+  const sectionFactory = (height, width) => {
+    return {height, width}
+  }
   
-  const newBox = {
-    width: 6, 
-    height: 5,
-  }
-  const oldBox = {
-    width: 11, 
-    height: 4.5,
-  }
+  const newBox = sectionFactory(5, 6);
+  const oldBox = sectionFactory(4.5, 11);
+  const alumBase = sectionFactory(2, 5);
+  const alumMid = sectionFactory(1.85, 3.85);
+  const alumTip = sectionFactory(1.75, 2.5);
+  const fGBase = sectionFactory();
+  const fGSecond = sectionFactory();
+  const fGMid = sectionFactory();
+
+
+
   let newBoxSpread;
   let oldBoxSpread;
+  let alumBaseSpread;
+  let alumMidSpread;
+  let alumTipSpread;
+  let fGBaseSpread;
+  let fGSecondSpread;
+  let fGMidSpread;
   let combinedSpread;
   let skidHeight;
   let newAmount;
@@ -281,6 +292,31 @@ addListeners = (() => {
   }  
  ///////////////////////////////Unboxed Gates Caluclator Logic ///////////////////////////////////////////////////////////////////////////////////////
  
+
+  
+ addAlumBases = (amount) => {                // returns width of specified number of alum bases (no sleeves) placed side by side. 
+  alumBaseAmount = amount;
+  alumBaseSpread = alumBase.width * amount;
+  return {
+    alumBaseSpread,
+  }
+}
+
+addAlumMids = (amount) => {                // returns width of specified number of alum mids placed side by side. 
+  alumMidAmount = amount;
+  alumMidSpread = alumMid.width * amount;
+  return {
+    alumMidSpread,
+  }
+}
+
+
+getUnboxedSkidSize = () => {
+  
+}
+
+
+
  
 
 
@@ -299,7 +335,7 @@ tableContainer.style.width = "90%";
 
 tableContainer.style.display = "flex";
 tableContainer.style.justifyContent = "center"
-header.textContent = `Crate ${crate_num}`;                    /////// change default "1" to variable that will change with every new table appended
+header.textContent = `Crate ${crate_num}`;                    
 header.style.border = "solid black 1px";
 header.style.backgroundColor = "white";
 header.style.textAlign = "center";
@@ -380,7 +416,6 @@ tdPallet.setAttribute('id', 'pallets');
 row4.appendChild(tdTwoByFour);
 row4.appendChild(tdPly);
 row4.appendChild(tdPallet);
-//////////// experimental code below //////
 tdWidth.innerHTML = width;     
 tdHeight.innerHTML = height;
 tdLength.innerHTML = length;    
@@ -397,25 +432,55 @@ tdPallet.innerHTML = pallets;
 
 makeResetButton = (() => {
   document.querySelector('.reset').addEventListener('click', function() { 
-    resetValues.reset()
+   // resetValues.reset()
     document.querySelector('input[name="new"]').value = '';
     document.querySelector('input[name="old"]').value = '';
-    document.getElementById('result-panel').removeChild(document.getElementById('tableContainer')) /////////////////////////////// experimental
+    document.getElementById('result-panel').removeChild(document.getElementById('tableContainer'));
+    document.getElementById('subButton').removeAttribute('disabled', 'true');
+    crateNum = 1;
+
   });
 })();
 
+checkValues = () => {
+  let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
+  let oldBoxes = document.getElementById("old").value;
+  let select = document.getElementById('crate_type');
+  let values = select.options[select.selectedIndex].value;
+  if (values === '--Choose one--') {
+    alert('Please choose crate type!')
+  }
+  else if (values === 'Minimal - No plywood' || values === 'Fully enclosed') {
+    if (newBoxes > 0 || oldBoxes > 0) {
+      tabNav.turnpageResults();  /// allow result page to display only if table has already been created
+      getSkidSize();
+      disableButton();
+    }
+    else if (newBoxes > 0 && oldBoxes > 0) {
+      tabNav.turnpageResults();
+      getSkidSize();
+      disableButton();
+    } 
+  }
+}
 
+disableButton = () => {
+  document.getElementById('subButton').setAttribute('disabled', 'true');
+  
+}
 
    
 function submitInput() {
   let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
   let oldBoxes = document.getElementById("old").value;
-  tabNav.turnpageResults();
-  boxCombinator(newBoxes, oldBoxes);    // this logs the width of boxes laid flat, side by side and the type of crate they would go on
-  getSkidSize()
+  let bases = document.getElementById("bases").value;  //// use this variable for future function/ unboxed gates values
+  boxCombinator(newBoxes, oldBoxes);
+  checkValues()
+     
+ // getSkidSize()
 }
 
 
-resetValues.reset()
+//resetValues.reset()
 
 

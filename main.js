@@ -68,12 +68,11 @@
 // sets table results to zero as default. Also returns all caculated values back to zero.
 resetValues = (() => {
   function reset() {
-    document.getElementById("height").innerHTML =  '0';
-    document.getElementById("width").innerHTML =  '0';
-    document.getElementById("length").innerHTML = '0';
-    document.getElementById("2x4").innerHTML =  '0';
-    document.getElementById("ply").innerHTML = '0';
-    document.getElementById("pallets").innerHTML = '0';
+    document.getElementById("bases").value = '';
+    document.querySelector('input[name="new"]').value = '';
+    document.querySelector('input[name="old"]').value = '';
+    document.getElementById('result-panel').removeChild(document.getElementById('tableContainer'));
+    document.getElementById('subButton').removeAttribute('disabled', 'true');
     crateNum = 1;
   }
 
@@ -163,10 +162,10 @@ addListeners = (() => {
   
   
   getSkidSize = () => {                       // using the combined width of boxes, returns all crate dimensions and relates specs. 
-    
+    resultPanelMod()
     if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {     /////// work on this. this allows too many old or new boxes to be placed on crate
       skidWidth = '43"';
-      findCrateHeight(combinedSpread, 40);
+      findCrateHeight(combinedSpread, 40, 5);
       getEnclosedValues();
       getWoodAmount();
       createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3); 
@@ -174,7 +173,7 @@ addListeners = (() => {
     
     else if (combinedSpread > 0 && combinedSpread <= 24) {
       skidWidth = '12"';
-      findCrateHeight(combinedSpread, 12);
+      findCrateHeight(combinedSpread, 12, 5);
       getEnclosedValues();
       getWoodAmount();
       createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0); 
@@ -182,7 +181,7 @@ addListeners = (() => {
     
     else if (combinedSpread > 24 && combinedSpread < 40) {
       skidWidth = '18"';
-      findCrateHeight(combinedSpread, 18);
+      findCrateHeight(combinedSpread, 18, 5);
       getEnclosedValues(); 
       getWoodAmount();
       createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0);
@@ -208,6 +207,7 @@ addListeners = (() => {
       combinedSpread = 234;
       crateNum += 1;
       getSkidSize();
+      
     }
 
     else if (oldBoxSpread > 198) {
@@ -218,6 +218,7 @@ addListeners = (() => {
       combinedSpread = 198;
       crateNum += 1;
       getSkidSize();
+      
     }
     
     //// make table display what boxes go on which crate. 
@@ -236,10 +237,10 @@ addListeners = (() => {
     }
   }
   
-  findCrateHeight = (amount, crateWidth) => {        // returns number of vertical rows of boxes, old and new. 
+  findCrateHeight = (amount, crateWidth, high) => {        // returns number of vertical rows of boxes, old and new. 
     rowsHigh = amount / crateWidth;                  // the total width of all boxes divided by max width of skid returns the number of vertical rows. 
     let x = Math.ceil(rowsHigh);                     // there can be no partial rows, so round the returned number to the next highest interger. 
-    skidHeight = x * 5;                              // multiply the rounded number by height of the box to get height. Wood height to be added later.
+    skidHeight = x * high;                              // multiply the rounded number by height of the box to get height. Wood height to be added later.
                                                        
   }
 
@@ -312,7 +313,13 @@ addAlumMids = (amount) => {                // returns width of specified number 
 
 
 getUnboxedSkidSize = () => {
-  
+  if (alumBaseSpread > 35 ) {
+    skidWidth = '43';
+    findCrateHeight(alumBaseSpread, 40, 2)
+    getEnclosedValues();
+    getWoodAmount();
+    createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3)
+  }
 }
 
 
@@ -322,7 +329,7 @@ getUnboxedSkidSize = () => {
 
 ///////////////////////////////////////////////////////////////////
 // DOM table creation:  Save and delete table element from HTML
-createTable = (width, height, length, boards, ply, crate_num, pallets) => {  ///// parameters experimental
+createTable = (width, height, length, boards, ply, crate_num, pallets) => {  
 let tableContainer = document.createElement('div');
 tableContainer.setAttribute('id', 'tableContainer');
 let resultPanel = document.getElementById('result-panel');
@@ -330,9 +337,7 @@ resultPanel.appendChild(tableContainer);
 let header = document.createElement('div');
 header.setAttribute('id', 'tableHeader');
 tableContainer.appendChild(header);
-
 tableContainer.style.width = "90%";
-
 tableContainer.style.display = "flex";
 tableContainer.style.justifyContent = "center"
 header.textContent = `Crate ${crate_num}`;                    
@@ -391,16 +396,16 @@ let th7 = document.createElement('TH');
 let th8 = document.createElement('TH');
 th5.rowSpan = "2";
 th5.colSpan = "1";
-th5.style.backgroundColor = "#817748";
+th5.style.backgroundColor = "#4b4b4b";
 th5.style.color = "white";
 th5.textContent = "Materials";
-th6.style.backgroundColor = "#817748";
+th6.style.backgroundColor = "#4b4b4b";
 th6.style.color = "white";
 th6.textContent = "2x4";
-th7.style.backgroundColor = "#817748";
+th7.style.backgroundColor = "#4b4b4b";
 th7.style.color = "white";
 th7.textContent = "Plywood";
-th8.style.backgroundColor = "#817748";
+th8.style.backgroundColor = "#4b4b4b";
 th8.style.color = "white";
 th8.textContent = "Pallets";
 row3.appendChild(th5);
@@ -421,32 +426,34 @@ tdHeight.innerHTML = height;
 tdLength.innerHTML = length;    
 tdTwoByFour.innerHTML = boards;
 tdPly.innerHTML = ply;
-//document.getElementById("amount").innerHTML = crate_num;        ///////////////////////////////////////
 tdPallet.innerHTML = pallets;
-
 
 }                              
 
-
+function resultPanelMod() {
+  if (crateNum < 4) {
+  document.getElementById('result-panel').style.justifyContent = "space-evenly";
+}
+  else if (crateNum > 3) {
+    document.getElementById('result-panel').style.removeProperty('justify-content')
+  }
+}  
    
 
 makeResetButton = (() => {
   document.querySelector('.reset').addEventListener('click', function() { 
-   // resetValues.reset()
-    document.querySelector('input[name="new"]').value = '';
-    document.querySelector('input[name="old"]').value = '';
-    document.getElementById('result-panel').removeChild(document.getElementById('tableContainer'));
-    document.getElementById('subButton').removeAttribute('disabled', 'true');
-    crateNum = 1;
-
+   resetValues.reset()
   });
 })();
 
-checkValues = () => {
+
+
+checkBoxedValues = () => {
   let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
   let oldBoxes = document.getElementById("old").value;
   let select = document.getElementById('crate_type');
   let values = select.options[select.selectedIndex].value;
+  boxCombinator(newBoxes, oldBoxes);
   if (values === '--Choose one--') {
     alert('Please choose crate type!')
   }
@@ -464,6 +471,20 @@ checkValues = () => {
   }
 }
 
+
+
+checkUnboxedValues = () => {
+  let bases = document.getElementById("bases").value;
+  addAlumBases(bases);
+  if (alumBaseAmount > 1) {
+  getUnboxedSkidSize();
+  tabNav.turnpageResults();
+  disableButton();
+  }
+}
+
+
+
 disableButton = () => {
   document.getElementById('subButton').setAttribute('disabled', 'true');
   
@@ -471,13 +492,10 @@ disableButton = () => {
 
    
 function submitInput() {
-  let newBoxes = document.getElementById("new").value;       // gets value of text fields and asigns them to newBoxes and oldBoxes variables //
-  let oldBoxes = document.getElementById("old").value;
-  let bases = document.getElementById("bases").value;  //// use this variable for future function/ unboxed gates values
-  boxCombinator(newBoxes, oldBoxes);
-  checkValues()
-     
- // getSkidSize()
+  checkBoxedValues();
+  checkUnboxedValues();
+ 
+
 }
 
 

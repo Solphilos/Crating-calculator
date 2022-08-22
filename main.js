@@ -123,6 +123,8 @@ addListeners = (() => {
   let skidHeight;
   let newAmount;
   let oldAmount;
+  let boxNumNew;
+  let boxNumOld;
   let newRowsHigh;
   let oldRowsHigh;
   let skidWidth;
@@ -135,7 +137,7 @@ addListeners = (() => {
   
   
   addNewBoxes = (amount) => {                // returns width of specified number of new boxes placed side by side. 
-    newAmount = amount;
+    newAmount = amount;                     
     newBoxSpread = newBox.width * amount;
     return {
       newBoxSpread,
@@ -154,7 +156,7 @@ addListeners = (() => {
     addNewBoxes(amountNew);
     addOldBoxes(amountOld);
     combinedSpread = newBoxSpread + oldBoxSpread;
-    
+    combinedBoxAmount = newAmount + oldAmount;         // experimental: for use in creating box simulation
     return {
       combinedSpread,
     }
@@ -163,12 +165,13 @@ addListeners = (() => {
   
   getSkidSize = () => {                       // using the combined width of boxes, returns all crate dimensions and relates specs. 
     resultPanelMod()
-    if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {     /////// work on this. this allows too many old or new boxes to be placed on crate
+    if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {      // cmobinedSpread < 235 is the culprit
       skidWidth = '43"';
       findCrateHeight(combinedSpread, 40, 5);
       getEnclosedValues();
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3); 
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount);  ///// place box amount as argument in last place of this function. 
+      displayBoxAmount();
     } 
     
     else if (combinedSpread > 0 && combinedSpread <= 24) {
@@ -176,7 +179,8 @@ addListeners = (() => {
       findCrateHeight(combinedSpread, 12, 5);
       getEnclosedValues();
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0); 
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount); 
+      displayBoxAmount(); 
     }
     
     else if (combinedSpread > 24 && combinedSpread < 40) {
@@ -184,17 +188,23 @@ addListeners = (() => {
       findCrateHeight(combinedSpread, 18, 5);
       getEnclosedValues(); 
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0);
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount);
+      displayBoxAmount();
     }
 
    
     
-    else if (newBoxSpread > 216) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
+    else if (newBoxSpread > 216 || combinedSpread > 221) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
       let remainder = combinedSpread - 216;
-      combinedSpread = remainder;  
-      newBoxSpread = 0;     
+      combinedSpread = remainder; 
+      newBoxSpread = 0;
+      let boxRemainder = remainder / newBox.width; 
+      newAmount = boxRemainder;       ////////////////  more than 72 new boxes doesnt work. the problem lies somewhere here and in getSkidSize function
+      //newAmount = newAmount - boxRemainder;             
       getSkidSize();                   
-      combinedSpread = 216;
+      combinedSpread = 216;      ///// the second pass after this point runs normally and produces a crate with 36 boxes. 
+      newAmount = 36;
+     // newAmount = boxRemainder;
       crateNum += 1;
       getSkidSize();
       
@@ -220,22 +230,30 @@ addListeners = (() => {
       getSkidSize();
       
     }
+
+ 
     
     //// make table display what boxes go on which crate. 
     
   }
 
+
+  displayBoxAmount = () => {
+    console.log(newAmount, oldAmount)
+  }
   
-  
-  startNewSkid = () => {                              // these variables are being populated to the first table, causing bad results
+  popBoxAmounts = () => {
+
+  }  
+ /* startNewSkid = () => {                              // these variables are being populated to the first table, causing bad results
     if (skidHeight > 38) {                           // if populating new table they should work as expected.
-      let remainder = combinedSpread - 216;           
+      let remainder = combinedSpread - 216;         
       combinedSpread = remainder;
       crateNum + 1;
       getSkidSize();
       
     }
-  }
+  } */
   
   findCrateHeight = (amount, crateWidth, high) => {        // returns number of vertical rows of boxes, old and new. 
     rowsHigh = amount / crateWidth;                  // the total width of all boxes divided by max width of skid returns the number of vertical rows. 
@@ -313,6 +331,7 @@ addAlumMids = (amount) => {                // returns width of specified number 
 
 
 getUnboxedSkidSize = () => {
+  resultPanelMod();
   if (alumBaseSpread > 35 ) {
     skidWidth = '43';
     findCrateHeight(alumBaseSpread, 40, 2)
@@ -329,7 +348,7 @@ getUnboxedSkidSize = () => {
 
 ///////////////////////////////////////////////////////////////////
 // DOM table creation:  Save and delete table element from HTML
-createTable = (width, height, length, boards, ply, crate_num, pallets) => {  
+createTable = (width, height, length, boards, ply, crate_num, pallets, newboxes, oldboxes) => {  
 let tableContainer = document.createElement('div');
 tableContainer.setAttribute('id', 'tableContainer');
 let resultPanel = document.getElementById('result-panel');
@@ -347,27 +366,44 @@ header.style.textAlign = "center";
 header.style.width = "4%";
 let table = document.createElement('TABLE');
 tableContainer.appendChild(table);
-table.setAttribute('id', 'resultTable');             
+table.setAttribute('id', 'resultTable');  
+let row0 = document.createElement('TR'); 
+let rowB = document.createElement('TR');           ///////////////////////////           
 let row1 = document.createElement('TR');
 let row2 = document.createElement('TR');
 let row3 = document.createElement('TR');
 let row4 = document.createElement('TR');
+row0.setAttribute('id', 'row0');                     ///////////////
 row1.setAttribute('id', 'row1');
 row2.setAttribute('id', 'row2');
 row3.setAttribute('id', 'row3');
 row4.setAttribute('id', 'row4');
+table.appendChild(row0);  
+table.appendChild(rowB);                          ////////////////////
 table.appendChild(row1);
 table.appendChild(row2);
 table.appendChild(row3);
 table.appendChild(row4);
+let th0 = document.createElement('TH'); 
+let thNew = document.createElement('TH');
+let thOld = document.createElement('TH');          //////////////////////
 let th1 = document.createElement('TH');
 let th2 = document.createElement('TH');
 let th3 = document.createElement('TH');
 let th4 = document.createElement('TH');
+th0.style.backgroundColor = "24507C";
+th0.textContent = "Boxes";  
+th0.style.backgroundColor = "#93c5fd";
+th0.rowSpan = "2";
+th0.colSpan = "2";
+thNew.textContent = "New boxes";
+thOld.textContent = "Old Boxes";
+thNew.style.backgroundColor = "#93c5fd";
+thOld.style.backgroundColor = "#93c5fd";              /////////////////////
 th1.rowSpan = "2";
 th1.style.backgroundColor = "#24507C";
 th1.style.color = "white";
-th1.textContent = "Dimensions";
+th1.textContent = "Dimensions";            
 th2.style.backgroundColor = "#24507C";
 th2.style.color = "white";
 th2.textContent = "Length";
@@ -377,19 +413,28 @@ th3.textContent = "Width";
 th4.style.backgroundColor = "#24507C";
 th4.style.color = "white";
 th4.textContent = "Height";
+row0.appendChild(th0);  
+row0.appendChild(thNew);
+row0.appendChild(thOld);                  ////////////////////////
 row1.appendChild(th1);
 row1.appendChild(th2);
 row1.appendChild(th3);
 row1.appendChild(th4);
+let newboxs = document.createElement('TD');
+let oldboxs = document.createElement('TD');
 let tdLength = document.createElement('TD');
 let tdWidth = document.createElement('TD');
 let tdHeight = document.createElement('TD');
 tdLength.setAttribute('id', 'length');
 tdWidth.setAttribute('id', 'width');
 tdHeight.setAttribute('id', 'height');
+newboxs.setAttribute('id', 'newboxs');
+oldboxs.setAttribute('id', 'oldboxs');
 row2.appendChild(tdLength);
 row2.appendChild(tdWidth);
 row2.appendChild(tdHeight);
+rowB.appendChild(newboxs);
+rowB.appendChild(oldboxs);
 let th5 = document.createElement('TH');
 let th6 = document.createElement('TH');
 let th7 = document.createElement('TH');
@@ -427,17 +472,21 @@ tdLength.innerHTML = length;
 tdTwoByFour.innerHTML = boards;
 tdPly.innerHTML = ply;
 tdPallet.innerHTML = pallets;
+newboxs.innerHTML = newboxes;
+oldboxs.innerHTML = oldboxes;
 
 }                              
 
 function resultPanelMod() {
-  if (crateNum < 4) {
+  if (crateNum < 3) {
   document.getElementById('result-panel').style.justifyContent = "space-evenly";
-}
-  else if (crateNum > 3) {
+  }
+  else if (crateNum >= 3) {
     document.getElementById('result-panel').style.removeProperty('justify-content')
   }
 }  
+
+
    
 
 makeResetButton = (() => {
@@ -494,8 +543,6 @@ disableButton = () => {
 function submitInput() {
   checkBoxedValues();
   checkUnboxedValues();
- 
-
 }
 
 

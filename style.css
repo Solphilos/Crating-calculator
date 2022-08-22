@@ -460,16 +460,17 @@ h1 em {
     align-items: center;
     border-radius: 0px 6px 6px 6px;
     justify-content: center;
-   
+    /* formerly justify-content: center;  this prevents top of content being visible when overflow is applied. 
+    Find another way to center div. */
 }
 
 .newDiv {
-
   display: flex;
   flex-direction: column;
   background: var(--neg-silver);
   justify-content: space-evenly;
   align-items: center;
+  overflow: auto;
   width: 96%;
   height: 96%;
 }
@@ -481,10 +482,7 @@ h1 em {
   display: flex;
   flex-direction: column;
   background: var(--neg-silver);
-  
   align-items: center;
-
- 
 }
 
 #blank {
@@ -510,7 +508,6 @@ h1 em {
     font-size: 22px;
     left: 230px;
     bottom: 48px;
- 
 }
 
 
@@ -519,7 +516,6 @@ table {
     height: 30%;
     width: 80%;
     border-radius: 6px;
-    
 }
 
 
@@ -528,7 +524,6 @@ tr, th, td {
     border: solid var(--main-bg-color) 1px;
     padding: 10px;
     text-align: center;
-   
 }
 
 

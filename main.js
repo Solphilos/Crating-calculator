@@ -170,51 +170,67 @@ addListeners = (() => {
       findCrateHeight(combinedSpread, 40, 5);
       getEnclosedValues();
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount);  ///// place box amount as argument in last place of this function. 
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount, oldAmount);  ///// place box amount as argument in last place of this function. 
       displayBoxAmount();
     } 
     
+   /* if (combinedSpread === 42) {      
+      skidWidth = '43"';
+      findCrateHeight(combinedSpread, 40, 5);
+      getEnclosedValues();
+      getWoodAmount();
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount, oldAmount);  ///// place box amount as argument in last place of this function. 
+      displayBoxAmount();
+    } */
+    
+
     else if (combinedSpread > 0 && combinedSpread <= 24) {
       skidWidth = '12"';
       findCrateHeight(combinedSpread, 12, 5);
       getEnclosedValues();
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount); 
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount, oldAmount); 
       displayBoxAmount(); 
     }
     
-    else if (combinedSpread > 24 && combinedSpread < 40) {
+    else if (combinedSpread > 24 && combinedSpread <= 40) {
       skidWidth = '18"';
       findCrateHeight(combinedSpread, 18, 5);
       getEnclosedValues(); 
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount);
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount, oldAmount);
       displayBoxAmount();
     }
 
    
-    
+    /* This statement is for new boxes only. If the amount of new boxes exceeds the skid limit (36)....
+    this will subtract the skid limit (36) from the total amount. The difference will be looped back through this function and results calculated.
+    Next, the skid limit (36) will be run through this function and results will be calculated. If the difference of the initial subtraction still exceeds
+    the skid limit, it will pass through this statement once again and the process will repeat until the amount no longer fits the criteria of this statement */
+
     else if (newBoxSpread > 216 || combinedSpread > 221) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
       let remainder = combinedSpread - 216;
       combinedSpread = remainder; 
+      // newBoxSpread = remainder;
       newBoxSpread = 0;
       let boxRemainder = remainder / newBox.width; 
-      newAmount = boxRemainder;       ////////////////  more than 72 new boxes doesnt work. the problem lies somewhere here and in getSkidSize function
-      //newAmount = newAmount - boxRemainder;             
-      getSkidSize();                   
-      combinedSpread = 216;      ///// the second pass after this point runs normally and produces a crate with 36 boxes. 
-      newAmount = 36;
-     // newAmount = boxRemainder;
+      newAmount = boxRemainder;                 
+      getSkidSize();  
+      //newBoxSpread = 0;                 
+      combinedSpread = 216;     
+      newAmount = 36;               
       crateNum += 1;
-      getSkidSize();
-      
+      getSkidSize();  
     }
+
+    /* This statement is for a combination of old and new boxes. Its function is the same as the statement above, only for 
+    the combination of both box types */
 
     else if (combinedSpread > 234) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
       let remainder = combinedSpread - 234;
       combinedSpread = remainder;
       getSkidSize();
-      combinedSpread = 234;
+      combinedSpread = 234;                          
       crateNum += 1;
       getSkidSize();
       
@@ -224,18 +240,17 @@ addListeners = (() => {
       let remainder = combinedSpread - 198;
       combinedSpread = remainder;
       oldBoxSpread = 0;
+      let boxRemainder = remainder / oldBox.width;
+      oldAmount = boxRemainder;
       getSkidSize();
       combinedSpread = 198;
+      oldAmount = 18;
       crateNum += 1;
       getSkidSize();
-      
     }
 
- 
     
-    //// make table display what boxes go on which crate. 
-    
-  }
+  }   
 
 
   displayBoxAmount = () => {
@@ -262,6 +277,8 @@ addListeners = (() => {
                                                        
   }
 
+  // This function calculates the amount of 2x4 lumber used in each crate.
+
   getWoodAmount = () => {
     let sideBoards; 
     
@@ -279,6 +296,8 @@ addListeners = (() => {
       twoByFour = `${Math.ceil(sideBoards) + 44} feet`;
     }
   }
+
+  // This function calculates the amount of plywood used in each crate.
 
   getPlyAmount = () => {
     let sidePanels;
@@ -298,6 +317,7 @@ addListeners = (() => {
     }
   }
 
+  // This function gets the values of the "crate type" select element.  
 
   getEnclosedValues = () => {
     let select = document.getElementById('crate_type');
@@ -347,135 +367,136 @@ getUnboxedSkidSize = () => {
 
 
 ///////////////////////////////////////////////////////////////////
-// DOM table creation:  Save and delete table element from HTML
+// DOM table creation:  Save and delete table element from HTML. 
 createTable = (width, height, length, boards, ply, crate_num, pallets, newboxes, oldboxes) => {  
-let tableContainer = document.createElement('div');
-tableContainer.setAttribute('id', 'tableContainer');
-let resultPanel = document.getElementById('result-panel');
-resultPanel.appendChild(tableContainer);
-let header = document.createElement('div');
-header.setAttribute('id', 'tableHeader');
-tableContainer.appendChild(header);
-tableContainer.style.width = "90%";
-tableContainer.style.display = "flex";
-tableContainer.style.justifyContent = "center"
-header.textContent = `Crate ${crate_num}`;                    
-header.style.border = "solid black 1px";
-header.style.backgroundColor = "white";
-header.style.textAlign = "center";
-header.style.width = "4%";
-let table = document.createElement('TABLE');
-tableContainer.appendChild(table);
-table.setAttribute('id', 'resultTable');  
-let row0 = document.createElement('TR'); 
-let rowB = document.createElement('TR');           ///////////////////////////           
-let row1 = document.createElement('TR');
-let row2 = document.createElement('TR');
-let row3 = document.createElement('TR');
-let row4 = document.createElement('TR');
-row0.setAttribute('id', 'row0');                     ///////////////
-row1.setAttribute('id', 'row1');
-row2.setAttribute('id', 'row2');
-row3.setAttribute('id', 'row3');
-row4.setAttribute('id', 'row4');
-table.appendChild(row0);  
-table.appendChild(rowB);                          ////////////////////
-table.appendChild(row1);
-table.appendChild(row2);
-table.appendChild(row3);
-table.appendChild(row4);
-let th0 = document.createElement('TH'); 
-let thNew = document.createElement('TH');
-let thOld = document.createElement('TH');          //////////////////////
-let th1 = document.createElement('TH');
-let th2 = document.createElement('TH');
-let th3 = document.createElement('TH');
-let th4 = document.createElement('TH');
-th0.style.backgroundColor = "24507C";
-th0.textContent = "Boxes";  
-th0.style.backgroundColor = "#93c5fd";
-th0.rowSpan = "2";
-th0.colSpan = "2";
-thNew.textContent = "New boxes";
-thOld.textContent = "Old Boxes";
-thNew.style.backgroundColor = "#93c5fd";
-thOld.style.backgroundColor = "#93c5fd";              /////////////////////
-th1.rowSpan = "2";
-th1.style.backgroundColor = "#24507C";
-th1.style.color = "white";
-th1.textContent = "Dimensions";            
-th2.style.backgroundColor = "#24507C";
-th2.style.color = "white";
-th2.textContent = "Length";
-th3.style.backgroundColor = "#24507C";
-th3.style.color = "white";
-th3.textContent = "Width";
-th4.style.backgroundColor = "#24507C";
-th4.style.color = "white";
-th4.textContent = "Height";
-row0.appendChild(th0);  
-row0.appendChild(thNew);
-row0.appendChild(thOld);                  ////////////////////////
-row1.appendChild(th1);
-row1.appendChild(th2);
-row1.appendChild(th3);
-row1.appendChild(th4);
-let newboxs = document.createElement('TD');
-let oldboxs = document.createElement('TD');
-let tdLength = document.createElement('TD');
-let tdWidth = document.createElement('TD');
-let tdHeight = document.createElement('TD');
-tdLength.setAttribute('id', 'length');
-tdWidth.setAttribute('id', 'width');
-tdHeight.setAttribute('id', 'height');
-newboxs.setAttribute('id', 'newboxs');
-oldboxs.setAttribute('id', 'oldboxs');
-row2.appendChild(tdLength);
-row2.appendChild(tdWidth);
-row2.appendChild(tdHeight);
-rowB.appendChild(newboxs);
-rowB.appendChild(oldboxs);
-let th5 = document.createElement('TH');
-let th6 = document.createElement('TH');
-let th7 = document.createElement('TH');
-let th8 = document.createElement('TH');
-th5.rowSpan = "2";
-th5.colSpan = "1";
-th5.style.backgroundColor = "#4b4b4b";
-th5.style.color = "white";
-th5.textContent = "Materials";
-th6.style.backgroundColor = "#4b4b4b";
-th6.style.color = "white";
-th6.textContent = "2x4";
-th7.style.backgroundColor = "#4b4b4b";
-th7.style.color = "white";
-th7.textContent = "Plywood";
-th8.style.backgroundColor = "#4b4b4b";
-th8.style.color = "white";
-th8.textContent = "Pallets";
-row3.appendChild(th5);
-row3.appendChild(th6);
-row3.appendChild(th7);
-row3.appendChild(th8);
-let tdTwoByFour = document.createElement('TD');
-let tdPly = document.createElement('TD');
-let tdPallet = document.createElement('TD'); 
-tdTwoByFour.setAttribute('id', '2x4');
-tdPly.setAttribute('id', 'ply');
-tdPallet.setAttribute('id', 'pallets');
-row4.appendChild(tdTwoByFour);
-row4.appendChild(tdPly);
-row4.appendChild(tdPallet);
-tdWidth.innerHTML = width;     
-tdHeight.innerHTML = height;
-tdLength.innerHTML = length;    
-tdTwoByFour.innerHTML = boards;
-tdPly.innerHTML = ply;
-tdPallet.innerHTML = pallets;
-newboxs.innerHTML = newboxes;
-oldboxs.innerHTML = oldboxes;
+  let tableContainer = document.createElement('div');
+  tableContainer.setAttribute('id', 'tableContainer');
+  let resultPanel = document.getElementById('result-panel');
+  resultPanel.appendChild(tableContainer);
+  let header = document.createElement('div');
+  header.setAttribute('id', 'tableHeader');
+  tableContainer.appendChild(header);
+  tableContainer.style.width = "90%";
+  tableContainer.style.display = "flex";
+  tableContainer.style.justifyContent = "center"
+  header.textContent = `Crate ${crate_num}`;                    
+  header.style.border = "solid black 1px";
+  header.style.backgroundColor = "white";
+  header.style.textAlign = "center";
+  header.style.width = "4%";
+  let table = document.createElement('TABLE');
+  tableContainer.appendChild(table);
+  table.setAttribute('id', 'resultTable');  
+  let row0 = document.createElement('TR'); 
+  let rowB = document.createElement('TR');           ///////////////////////////           
+  let row1 = document.createElement('TR');
+  let row2 = document.createElement('TR');
+  let row3 = document.createElement('TR');
+  let row4 = document.createElement('TR');
+  row0.setAttribute('id', 'row0');                     ///////////////
+  row1.setAttribute('id', 'row1');
+  row2.setAttribute('id', 'row2');
+  row3.setAttribute('id', 'row3');
+  row4.setAttribute('id', 'row4');
+  table.appendChild(row0);  
+  table.appendChild(rowB);                          ////////////////////
+  table.appendChild(row1);
+  table.appendChild(row2);
+  table.appendChild(row3);
+  table.appendChild(row4);
+  let th0 = document.createElement('TH'); 
+  let thNew = document.createElement('TH');
+  let thOld = document.createElement('TH');          //////////////////////
+  let th1 = document.createElement('TH');
+  let th2 = document.createElement('TH');
+  let th3 = document.createElement('TH');
+  let th4 = document.createElement('TH');
+  th0.style.backgroundColor = "24507C";
+  th0.textContent = "Boxes";  
+  th0.style.backgroundColor = "#93c5fd";
+  th0.rowSpan = "2";
+  th0.colSpan = "2";
+  thNew.textContent = "New boxes";
+  thOld.textContent = "Old Boxes";
+  thNew.style.backgroundColor = "#93c5fd";
+  thOld.style.backgroundColor = "#93c5fd";              /////////////////////
+  th1.rowSpan = "2";
+  th1.style.backgroundColor = "#24507C";
+  th1.style.color = "white";
+  th1.textContent = "Dimensions";            
+  th2.style.backgroundColor = "#24507C";
+  th2.style.color = "white";
+  th2.textContent = "Length";
+  th3.style.backgroundColor = "#24507C";
+  th3.style.color = "white";
+  th3.textContent = "Width";
+  th4.style.backgroundColor = "#24507C";
+  th4.style.color = "white";
+  th4.textContent = "Height";
+  row0.appendChild(th0);  
+  row0.appendChild(thNew);
+  row0.appendChild(thOld);                  ////////////////////////
+  row1.appendChild(th1);
+  row1.appendChild(th2);
+  row1.appendChild(th3);
+  row1.appendChild(th4);
+  let newboxs = document.createElement('TD');
+  let oldboxs = document.createElement('TD');
+  let tdLength = document.createElement('TD');
+  let tdWidth = document.createElement('TD');
+  let tdHeight = document.createElement('TD');
+  tdLength.setAttribute('id', 'length');
+  tdWidth.setAttribute('id', 'width');
+  tdHeight.setAttribute('id', 'height');
+  newboxs.setAttribute('id', 'newboxs');
+  oldboxs.setAttribute('id', 'oldboxs');
+  row2.appendChild(tdLength);
+  row2.appendChild(tdWidth);
+  row2.appendChild(tdHeight);
+  rowB.appendChild(newboxs);
+  rowB.appendChild(oldboxs);
+  let th5 = document.createElement('TH');
+  let th6 = document.createElement('TH');
+  let th7 = document.createElement('TH');
+  let th8 = document.createElement('TH');
+  th5.rowSpan = "2";
+  th5.colSpan = "1";
+  th5.style.backgroundColor = "#4b4b4b";
+  th5.style.color = "white";
+  th5.textContent = "Materials";
+  th6.style.backgroundColor = "#4b4b4b";
+  th6.style.color = "white";
+  th6.textContent = "2x4";
+  th7.style.backgroundColor = "#4b4b4b";
+  th7.style.color = "white";
+  th7.textContent = "Plywood";
+  th8.style.backgroundColor = "#4b4b4b";
+  th8.style.color = "white";
+  th8.textContent = "Pallets";
+  row3.appendChild(th5);
+  row3.appendChild(th6);
+  row3.appendChild(th7);
+  row3.appendChild(th8);
+  let tdTwoByFour = document.createElement('TD');
+  let tdPly = document.createElement('TD');
+  let tdPallet = document.createElement('TD'); 
+  tdTwoByFour.setAttribute('id', '2x4');
+  tdPly.setAttribute('id', 'ply');
+  tdPallet.setAttribute('id', 'pallets');
+  row4.appendChild(tdTwoByFour);
+  row4.appendChild(tdPly);
+  row4.appendChild(tdPallet);
+  tdWidth.innerHTML = width;     
+  tdHeight.innerHTML = height;
+  tdLength.innerHTML = length;    
+  tdTwoByFour.innerHTML = boards;
+  tdPly.innerHTML = ply;
+  tdPallet.innerHTML = pallets;
+  newboxs.innerHTML = newboxes;
+  oldboxs.innerHTML = oldboxes;
+} 
 
-}                              
+// This function dictates how the table element is displayed, depending on how many tables populate the containing div. 
 
 function resultPanelMod() {
   if (crateNum < 3) {
@@ -487,7 +508,7 @@ function resultPanelMod() {
 }  
 
 
-   
+// This function is self-explanatory.    
 
 makeResetButton = (() => {
   document.querySelector('.reset').addEventListener('click', function() { 
@@ -547,5 +568,3 @@ function submitInput() {
 
 
 //resetValues.reset()
-
-

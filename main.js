@@ -331,7 +331,7 @@ addListeners = (() => {
   }  
  ///////////////////////////////Unboxed Gates Caluclator Logic ///////////////////////////////////////////////////////////////////////////////////////
  
-
+ 
   
  addAlumBases = (amount) => {                // returns width of specified number of alum bases (no sleeves) placed side by side. 
   alumBaseAmount = amount;
@@ -421,6 +421,7 @@ createTable = (width, height, length, boards, ply, crate_num, pallets, newboxes,
   thNew.style.backgroundColor = "#93c5fd";
   thOld.style.backgroundColor = "#93c5fd";              /////////////////////
   th1.rowSpan = "2";
+  th1.classList.add('dimensions');
   th1.style.backgroundColor = "#24507C";
   th1.style.color = "white";
   th1.textContent = "Dimensions";            
@@ -496,6 +497,29 @@ createTable = (width, height, length, boards, ply, crate_num, pallets, newboxes,
   oldboxs.innerHTML = oldboxes;
 } 
 
+//////////////////////////////////
+
+hoverEffect = () => {
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('crateComponents');
+  const panel = document.getElementById('result-panel');
+  panel.appendChild(newDiv);
+ 
+}
+
+reverseEffect = () => {
+  const newDisplay = document.querySelector('.crateComponents');
+  document.getElementById('result-panel').removeChild(newDisplay);
+}
+
+displayComponents = () => {
+  const dimensions = document.querySelector('.dimensions');
+  dimensions.addEventListener('mouseover', hoverEffect);
+  dimensions.addEventListener('mouseout', reverseEffect);
+};
+
+
+
 // This function dictates how the table element is displayed, depending on how many tables populate the containing div. 
 
 function resultPanelMod() {
@@ -564,6 +588,7 @@ disableButton = () => {
 function submitInput() {
   checkBoxedValues();
   checkUnboxedValues();
+  displayComponents();
 }
 
 

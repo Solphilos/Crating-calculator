@@ -208,7 +208,25 @@ addListeners = (() => {
     Next, the skid limit (36) will be run through this function and results will be calculated. If the difference of the initial subtraction still exceeds
     the skid limit, it will pass through this statement once again and the process will repeat until the amount no longer fits the criteria of this statement */
 
-    else if (newBoxSpread > 216 || combinedSpread > 221) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
+    
+    else if (newBoxSpread > 216) {                              // This version works!!!  New boxes only!
+      let remainder = combinedSpread - 216;
+      combinedSpread = remainder; 
+      newBoxSpread = remainder;
+      let boxRemainder = remainder / newBox.width; 
+      newAmount = boxRemainder;                 
+      getSkidSize();                   
+      combinedSpread = 216;     
+      newAmount = 36;               
+      crateNum += 1;
+      getSkidSize();
+    }
+    
+    
+    /*
+    else if (newBoxSpread > 216 && newBoxSpread <= 432 || combinedSpread > 221 && combinedSpread <= 432) { 
+   //    else if (newBoxSpread > 216 || combinedSpread > 221) 
+      alert('1st filter')
       let remainder = combinedSpread - 216;
       combinedSpread = remainder; 
       // newBoxSpread = remainder;
@@ -223,10 +241,25 @@ addListeners = (() => {
       getSkidSize();  
     }
 
+
+  else if (newBoxSpread > 432) {
+    alert('third filter')                              ////// this creates an infinite loop!!!!!!!!!!!
+    let remainder = newBoxSpread - 216;
+    combinedSpread = 216;
+    newAmount = 36;
+    crateNum += 1;
+    getSkidSize();
+    newBoxSpread = remainder;
+    getSkidSize();
+  }
+  */
+
+
     /* This statement is for a combination of old and new boxes. Its function is the same as the statement above, only for 
     the combination of both box types */
 
     else if (combinedSpread > 234) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
+      alert('second filter')
       let remainder = combinedSpread - 234;
       combinedSpread = remainder;
       getSkidSize();
@@ -504,6 +537,7 @@ hoverEffect = () => {
   newDiv.classList.add('crateComponents');
   const panel = document.getElementById('result-panel');
   panel.appendChild(newDiv);
+  addComponentNames();
  
 }
 
@@ -516,9 +550,26 @@ displayComponents = () => {
   const dimensions = document.querySelector('.dimensions');
   dimensions.addEventListener('mouseover', hoverEffect);
   dimensions.addEventListener('mouseout', reverseEffect);
+  
 };
 
+addComponentNames = () => {
+  const components = document.querySelector('.crateComponents');
+  const sideBoards = document.createElement('div');
+  const doors = document.createElement('div');
+  const sidePly = document.createElement('div');
+  const runningBoards = document.createElement('div');
+  components.appendChild(sideBoards);
+  components.appendChild(doors);
+  components.appendChild(sidePly);
+  components.appendChild(runningBoards);
+  sideBoards.textContent = `2x4 side-boards: ${skidHeight}`;  //////////// this works for 40x16, need different method for smaller skids
+  doors.textContent = "Doors:";
+  sidePly.textContent = "Plywood sides:";
+  runningBoards.textContent = "2x4 running-boards:";
+  
 
+};
 
 // This function dictates how the table element is displayed, depending on how many tables populate the containing div. 
 

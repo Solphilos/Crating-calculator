@@ -209,7 +209,7 @@ addListeners = (() => {
     the skid limit, it will pass through this statement once again and the process will repeat until the amount no longer fits the criteria of this statement */
 
     
-    else if (newBoxSpread > 216) {                              // This version works!!!  New boxes only!
+    else if (newBoxSpread > 216) {                              // This version works!!!  New boxes only
       let remainder = combinedSpread - 216;
       combinedSpread = remainder; 
       newBoxSpread = remainder;
@@ -219,45 +219,13 @@ addListeners = (() => {
       combinedSpread = 216;     
       newAmount = 36;               
       crateNum += 1;
-      getSkidSize();
+      getSkidSize();                             // make a function that works for both new and old boxes ///////////////////////////
     }
     
     
-    /*
-    else if (newBoxSpread > 216 && newBoxSpread <= 432 || combinedSpread > 221 && combinedSpread <= 432) { 
-   //    else if (newBoxSpread > 216 || combinedSpread > 221) 
-      alert('1st filter')
-      let remainder = combinedSpread - 216;
-      combinedSpread = remainder; 
-      // newBoxSpread = remainder;
-      newBoxSpread = 0;
-      let boxRemainder = remainder / newBox.width; 
-      newAmount = boxRemainder;                 
-      getSkidSize();  
-      //newBoxSpread = 0;                 
-      combinedSpread = 216;     
-      newAmount = 36;               
-      crateNum += 1;
-      getSkidSize();  
-    }
-
-
-  else if (newBoxSpread > 432) {
-    alert('third filter')                              ////// this creates an infinite loop!!!!!!!!!!!
-    let remainder = newBoxSpread - 216;
-    combinedSpread = 216;
-    newAmount = 36;
-    crateNum += 1;
-    getSkidSize();
-    newBoxSpread = remainder;
-    getSkidSize();
-  }
-  */
-
-
     /* This statement is for a combination of old and new boxes. Its function is the same as the statement above, only for 
     the combination of both box types */
-
+   /*
     else if (combinedSpread > 234) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
       alert('second filter')
       let remainder = combinedSpread - 234;
@@ -267,12 +235,12 @@ addListeners = (() => {
       crateNum += 1;
       getSkidSize();
       
-    }
+    } */
 
-    else if (oldBoxSpread > 198) {
+    else if (oldBoxSpread > 198) {                              ///// This works! Old boxes only.
       let remainder = combinedSpread - 198;
       combinedSpread = remainder;
-      oldBoxSpread = 0;
+      oldBoxSpread = remainder;
       let boxRemainder = remainder / oldBox.width;
       oldAmount = boxRemainder;
       getSkidSize();
@@ -286,6 +254,7 @@ addListeners = (() => {
   }   
 
 
+
   displayBoxAmount = () => {
     console.log(newAmount, oldAmount)
   }
@@ -293,15 +262,7 @@ addListeners = (() => {
   popBoxAmounts = () => {
 
   }  
- /* startNewSkid = () => {                              // these variables are being populated to the first table, causing bad results
-    if (skidHeight > 38) {                           // if populating new table they should work as expected.
-      let remainder = combinedSpread - 216;         
-      combinedSpread = remainder;
-      crateNum + 1;
-      getSkidSize();
-      
-    }
-  } */
+ 
   
   findCrateHeight = (amount, crateWidth, high) => {        // returns number of vertical rows of boxes, old and new. 
     rowsHigh = amount / crateWidth;                  // the total width of all boxes divided by max width of skid returns the number of vertical rows. 
@@ -313,7 +274,7 @@ addListeners = (() => {
   // This function calculates the amount of 2x4 lumber used in each crate.
 
   getWoodAmount = () => {
-    let sideBoards; 
+    let sideBoards;    
     
     if (skidWidth === '43"') {
       sideBoards = skidHeight * 8 / 12;

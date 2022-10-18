@@ -17,6 +17,8 @@
               <button class="dropButton">Settings</button>
               <div class="drop_content">
                   <a href="#">Styles</a>
+                  <a href="#">Values</a>
+                  <a href="#">Saved results</a>
               </div>
             </div>
 
@@ -42,14 +44,41 @@
                       </div>
                       <div class="inst_box">
                       <div class="instructions">
-                          <p>Step 1 -<br> Choose Unboxed or Boxed gates tab to get started.</p>
+                          <fieldset>
+                              <legend>
+                                  How should product be crated?
+                              </legend>
+                              <div>
+                                <select name="crate_type" id="crate_type" placeholdler="Choose one" required>
+                                    <option>--Choose one--</option>
+                                    <option>Minimal - No plywood</option>
+                                    <option>Fully enclosed</option>
+                                  </select>
+                              </div>
+                          </fieldset> 
+                        
+                    
+                      
+                          <fieldset>
+                              <legend>
+                                  Will product be boxed?
+                              </legend>
+                                <div>
+                                    <input type="radio" name="boxedOrNot" id="yes">
+                                    <label for="yes" class="boxedOrNot">Yes</label>
+                                </div>
+                                    <input type="radio" name="boxedOrNot" id="no"> 
+                                    <label for="no" class="boxedOrNot">No</label>
+                                <div>
+
+                                </div>
+                              
+                               
+                              
+                               
+                        </fieldset> 
                       </div>
-                      <div class="instructions">
-                          <p>Step 2 -<br> Complete each field in window for accurate results.</p>
-                      </div>
-                      <div class="instructions">
-                          <p>Step 3 -<br> Click the calculate button to get results. Click clear button to reset fields.</p>
-                      </div>
+                     
                       </div>
 
                   </div>

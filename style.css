@@ -264,18 +264,32 @@ h1 em {
 }
 
 .instructions {
-    height: 90%;
+    height: 100%;
     width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    border: solid  #dae2eb 2px;
-    border-style: outset;
-    border-radius: 6px;
+   
 }
 
 .instructions p {
     margin-left: 20px;
+}
+
+.instructions form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80%;
+    
+}
+
+.instructions button {
+    width: 20%;
+}
+
+.instructions fieldset {
+    padding: 30px;
 }
 
 .instructions input {
@@ -314,7 +328,7 @@ select {
 .input_fields {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     height: 96%;
     width: 96%;
@@ -325,8 +339,8 @@ select {
 }
 
 .input_fields .box_bar {
-    position: relative;
-    bottom: 36px;
+    margin-bottom: 20%;
+    
 }
 
 
@@ -348,8 +362,7 @@ select {
 }
 
 .box_num {
-    position: relative;
-    bottom: 36px;
+    margin-bottom: 10%;
 }
 
 .type_label {

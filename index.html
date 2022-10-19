@@ -44,6 +44,7 @@
                       </div>
                       <div class="inst_box">
                       <div class="instructions">
+                          <form>
                           <fieldset>
                               <legend>
                                   How should product be crated?
@@ -64,19 +65,18 @@
                                   Will product be boxed?
                               </legend>
                                 <div>
-                                    <input type="radio" name="boxedOrNot" id="yes">
-                                    <label for="yes" class="boxedOrNot">Yes</label>
+                                    <input type="radio" name="boxedOrNot" value="yes" id="yes">
+                                    <label for="yes" class="boxedOrNot" required>Yes</label>
                                 </div>
-                                    <input type="radio" name="boxedOrNot" id="no"> 
+                                    <input type="radio" name="boxedOrNot" value="no" id="no"> 
                                     <label for="no" class="boxedOrNot">No</label>
                                 <div>
 
                                 </div>
-                              
-                               
-                              
-                               
-                        </fieldset> 
+                            </fieldset> 
+                           
+                            </form>
+                            <button id="nextButton">Next</button>
                       </div>
                      
                       </div>
@@ -85,18 +85,8 @@
               </div>
               <div class="input-container" id="input1">
                   <div class="input_fields">
-                      <div class="box_bar">
-                          TYPE OF CRATE
-                     </div>
-                      <div class="select_crt">
-                          <label for="crate_type" class="type_label">How should product be crated?</label>
-                          <select name="crate_type" id="crate_type" placeholdler="Choose one" required>
-                              <option>--Choose one--</option>
-                              <option>Minimal - No plywood</option>
-                              <option>Fully enclosed</option>
-                            </select>
-                        </div>
-                        <div class="box_bar">
+                     
+                       <div class="box_bar">
                             NUMBER OF BOXES
                         </div>
                       <div class="box_num">

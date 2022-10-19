@@ -1,5 +1,5 @@
- // tab navigation control
- tabNav = (() => {
+// tab navigation control
+tabNav = (() => {
   const input1 = document.getElementById('input1');
   const input2 = document.getElementById('input2');
   const homepage = document.getElementById('homepage');
@@ -65,6 +65,21 @@
 })();
 
 
+
+homeNextButton = () => {
+  let buttonValue = document.querySelector('input[name="boxedOrNot"]:checked').value;
+  if (buttonValue === 'yes') {
+    tabNav.turnPage2();
+  }
+  else if (buttonValue === 'no') {
+    tabNav.turnPage();
+  }
+}
+
+
+document.getElementById('nextButton').addEventListener('click', homeNextButton);
+
+
 // sets table results to zero as default. Also returns all caculated values back to zero.
 resetValues = (() => {
   function reset() {
@@ -90,11 +105,13 @@ addListeners = (() => {
   document.querySelector('.totals').addEventListener('click', tabNav.turnpageResults)
 })();
 
-///////////////// Calculator Logic Module //////////////////////////////////////////////////////////////////////////////////////
 
-/* this will be the logic for calculating the dimensions and materials of crates 
-   based on amount of boxes. When user inputs number of boxes + box type, return width, length and height
-   and amount of wood used.  */
+///////////////// Calculator Logic Module /////////////////////////////
+
+  /*this will be the logic for calculating the dimensions and materials of crates 
+  based on amount of boxes. When user inputs number of boxes + box type, return width, 
+  length and height
+  and amount of wood used. */
 
   const sectionFactory = (height, width) => {
     return {height, width}
@@ -165,12 +182,12 @@ addListeners = (() => {
   
   getSkidSize = () => {                       // using the combined width of boxes, returns all crate dimensions and relates specs. 
     resultPanelMod()
-    if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {      // cmobinedSpread < 235 is the culprit
+    if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {     
       skidWidth = '43"';
       findCrateHeight(combinedSpread, 40, 5);
       getEnclosedValues();
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount, oldAmount);  ///// place box amount as argument in last place of this function. 
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount, oldAmount);  
       displayBoxAmount();
     } 
     
@@ -179,7 +196,7 @@ addListeners = (() => {
       findCrateHeight(combinedSpread, 40, 5);
       getEnclosedValues();
       getWoodAmount();
-      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount, oldAmount);  ///// place box amount as argument in last place of this function. 
+      createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 3, newAmount, oldAmount); 
       displayBoxAmount();
     } */
     
@@ -204,9 +221,9 @@ addListeners = (() => {
 
    
     /* This statement is for new boxes only. If the amount of new boxes exceeds the skid limit (36)....
-    this will subtract the skid limit (36) from the total amount. The difference will be looped back through this function and results calculated.
-    Next, the skid limit (36) will be run through this function and results will be calculated. If the difference of the initial subtraction still exceeds
-    the skid limit, it will pass through this statement once again and the process will repeat until the amount no longer fits the criteria of this statement */
+    this will subtract the skid limit (36) from the total amount. The difference will be looped back through this function and results 
+    calculated. Next, the skid limit (36) will be run through this function and results will be calculated. If the difference of the 
+    initial subtraction still exceeds the skid limit, it will pass through this statement once again and the process will repeat until the amount no longer fits the criteria of this statement */
 
     
     else if (newBoxSpread > 216) {                              // This version works!!!  New boxes only
@@ -223,20 +240,6 @@ addListeners = (() => {
     }
     
     
-    /* This statement is for a combination of old and new boxes. Its function is the same as the statement above, only for 
-    the combination of both box types */
-   /*
-    else if (combinedSpread > 234) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
-      alert('second filter')
-      let remainder = combinedSpread - 234;
-      combinedSpread = remainder;
-      getSkidSize();
-      combinedSpread = 234;                          
-      crateNum += 1;
-      getSkidSize();
-      
-    } */
-
     else if (oldBoxSpread > 198) {                              ///// This works! Old boxes only.
       let remainder = combinedSpread - 198;
       combinedSpread = remainder;
@@ -250,8 +253,24 @@ addListeners = (() => {
       getSkidSize();
     }
 
-    
-  }   
+     
+
+  // work on this function
+
+    else if (combinedSpread > 234) {  // 216 is the max number for new boxes, 198 is max for old. 234 max for mixed.
+      alert('second filter')
+      let remainder = combinedSpread - 234;
+      combinedSpread = remainder;
+       
+      getSkidSize();
+      combinedSpread = 234;                          
+      crateNum += 1;
+      getSkidSize();
+      
+    } 
+
+  }  
+
 
 
 
@@ -323,11 +342,11 @@ addListeners = (() => {
        plywood = 0; 
     }
   }  
- ///////////////////////////////Unboxed Gates Caluclator Logic ///////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////Unboxed Gates Caluclator Logic //////////////////////////////////////////////////////////////
  
  
   
- addAlumBases = (amount) => {                // returns width of specified number of alum bases (no sleeves) placed side by side. 
+addAlumBases = (amount) => {                // returns width of specified number of alum bases (no sleeves) placed side by side. 
   alumBaseAmount = amount;
   alumBaseSpread = alumBase.width * amount;
   return {

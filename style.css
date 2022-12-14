@@ -272,6 +272,13 @@ h1 em {
    
 }
 
+fieldset {
+    border: solid rgb(255, 255, 255) 2px;
+    border-style: inset;
+   
+    
+}
+
 .instructions p {
     margin-left: 20px;
 }
@@ -281,11 +288,12 @@ h1 em {
     flex-direction: column;
     justify-content: space-between;
     height: 80%;
-    
 }
 
-.instructions button {
+
+#nextButton {
     width: 20%;
+    align-self: flex-end;
 }
 
 .instructions fieldset {
@@ -339,7 +347,8 @@ select {
 }
 
 .input_fields .box_bar {
-    margin-bottom: 20%;
+    height: 32%;
+    margin-bottom: 10%;
     
 }
 
@@ -362,7 +371,19 @@ select {
 }
 
 .box_num {
+   
+    height: 80%;
+    width: 60%;
     margin-bottom: 10%;
+}
+
+.box-num fieldset {
+    display: flex;
+    justify-content: center;
+}
+
+legend {
+    font-size: 1rem;
 }
 
 .type_label {
@@ -380,7 +401,6 @@ select {
     font-size: 26px;
     font-weight: bold;
     text-align: center;
-
 }
 
 .baseBox {
@@ -696,6 +716,10 @@ li.crate_type {
 .crateComponents {
     height: 300px;
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 30%;
     right: 5%;

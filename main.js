@@ -378,13 +378,13 @@ const getSkidSizeMixed = () => {
     findCrateHeight(newBoxSpread, oldBoxSpread, 12, 5);
     getEnclosedValues();
     getWoodAmount();
-    
+    createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount, oldAmount);
   } else if (combinedSpread > 24 && combinedSpread <= 40) {
     skidWidth = '18"';
     findCrateHeight(newBoxSpread, oldBoxSpread, 18, 5);
     getEnclosedValues();
     getWoodAmount();
-    
+    createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount, oldAmount);
   } else if (newBoxSpread > 216 && oldBoxSpread < 1) {
     alert('newBoxFilter');
     // new boxes only
@@ -487,21 +487,23 @@ const getSkidSize = () => {
     let newSpreadStorage = newBoxSpread;
     let oldSpreadStorage = oldBoxSpread;
     let combinedSpreadStorage = combinedSpread;
+    let oldAmountStorage = oldAmount;
     let tempSpread = combinedSpread - oldBoxSpread; 
     combinedSpread = tempSpread;
     oldBoxSpread = 0; 
+    oldAmount = 0;
     getSkidSizeMixed();     // this should separate old from new boxes and create skids of new only.
     // remove new boxes from the equation and create old box skid
-    /*newBoxSpread = newSpreadStorage;
+    newBoxSpread = newSpreadStorage;
     oldBoxSpread = oldSpreadStorage;
     combinedSpread = combinedSpreadStorage;
     tempSpread = combinedSpread - newBoxSpread;
     combinedSpread = tempSpread; 
-    newBoxSpread = 0; */
-    newAmount = tempNewAmount;
-    
-    oldBoxSpread = oldSpreadStorage;
-    combinedSpread = oldBoxSpread + newAmount;
+    newBoxSpread = 0;
+    newAmount = 0;
+    oldAmount = oldAmountStorage;
+  //  oldBoxSpread = oldSpreadStorage;
+   // combinedSpread = oldBoxSpread + newAmount;
     getSkidSizeMixed();
 
 

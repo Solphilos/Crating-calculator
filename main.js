@@ -389,18 +389,14 @@ const getSkidSizeMixed = () => {
     alert('newBoxFilter');
     // new boxes only
     
-   
-
-   
-    
     // need to return combinedspread to its original number before continuing
     const remainder = combinedSpread - 216;
-    combinedSpread = remainder;
-    newBoxSpread = remainder;
+    combinedSpread = remainder;                              //// work on this function. find way to add leftover new boxes to  crate
+    newBoxSpread = remainder;                                /////// that contains the remainder portion from mixed boxes function
     const boxRemainder = remainder / newBox.width;
     tempNewAmount = boxRemainder;   
-    getSkidSizeMixed();
-
+    getSkidSizeMixed();     // running this funct will create a new crate; instead, add remainer boxes to crate created in mixed function
+                        
     combinedSpread = 216;
     newBoxSpread = 216;
     newAmount = 36;
@@ -450,7 +446,7 @@ const getSkidSize = () => {
     createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount, oldAmount);
   } else if (newBoxSpread > 216 && oldBoxSpread < 1) {
     alert('newBoxFilter');
-    // new boxes only
+    // new boxes only                                                  
     const remainder = combinedSpread - 216;
     combinedSpread = remainder;
     newBoxSpread = remainder;
@@ -486,7 +482,7 @@ const getSkidSize = () => {
     // remove old boxes from the equation and create new box skid 
     let newSpreadStorage = newBoxSpread;
     let oldSpreadStorage = oldBoxSpread;
-    let combinedSpreadStorage = combinedSpread;
+    let combinedSpreadStorage = combinedSpread;      /// somewhere in here adapt newboxfilter to divide and add leftover new boxes to extra crate (if over 36)
     let oldAmountStorage = oldAmount;
     let tempSpread = combinedSpread - oldBoxSpread; 
     combinedSpread = tempSpread;
@@ -500,10 +496,9 @@ const getSkidSize = () => {
     tempSpread = combinedSpread - newBoxSpread;
     combinedSpread = tempSpread; 
     newBoxSpread = 0;
-    newAmount = 0;
+    newAmount = 0;                                          
     oldAmount = oldAmountStorage;
-  //  oldBoxSpread = oldSpreadStorage;
-   // combinedSpread = oldBoxSpread + newAmount;
+   
     getSkidSizeMixed();
 
 
@@ -564,6 +559,8 @@ const displayComponents = () => {
 };
 
 const addComponentNames = () => {
+  let plySides = skidHeight + 4;
+  let plyDoors = skidHeight + 3;
   const components = document.querySelector('.crateComponents');
   const sideBoards = document.createElement('div');
   const doors = document.createElement('div');
@@ -573,9 +570,9 @@ const addComponentNames = () => {
   components.appendChild(doors);
   components.appendChild(sidePly);
   components.appendChild(runningBoards);
-  sideBoards.textContent = `2x4 side-boards: ${skidHeight}`;
-  doors.textContent = 'Doors:';
-  sidePly.textContent = 'Plywood sides:';
+  sideBoards.textContent = `2x4 side-boards: 8 @ ${skidHeight}"`;
+  doors.textContent = `Doors: 2 @ 43" x ${plyDoors}"`;
+  sidePly.textContent = `Plywood sides: 4 @ 8' x ${plySides}"`;
   runningBoards.textContent = '2x4 running-boards:';
 };
 

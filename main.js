@@ -389,9 +389,21 @@ const getSkidSizeMixed = () => {
   } else if (newBoxSpread > 216 && oldBoxSpread < 1) {
     alert('newBoxFilter');
     // new boxes only
+    // new boxes only                                                  
+    const remainder = combinedSpread - 216;                 // somewhere between here and the below alternate function lies the way 
+    combinedSpread = remainder;
+    newBoxSpread = remainder;
+    const boxRemainder = remainder / newBox.width;
+    newAmount = boxRemainder;
+    getSkidSize();
+    combinedSpread = 216;
+    newBoxSpread = 216;
+    newAmount = 36;
+    crateNum += 1;
+    getSkidSize();
     
     // need to return combinedspread to its original number before continuing
-    const remainder = combinedSpread - 216;
+   /* const remainder = combinedSpread - 216;
     combinedSpread = remainder;                              //// work on this function. find way to add leftover new boxes to crate
     newBoxSpread = remainder;                                /////// that contains the remainder portion from mixed boxes function
     const boxRemainder = remainder / newBox.width;
@@ -403,7 +415,7 @@ const getSkidSizeMixed = () => {
     newAmount = 36;
     oldAmount = 0;
     crateNum += 1;
-    getSkidSizeMixed();
+    getSkidSizeMixed();  */
 
     
    
@@ -446,7 +458,6 @@ const getSkidSize = () => {
     getWoodAmount();
     createTable(skidWidth, skidHeight + 8, '16\'', twoByFour, plywood, crateNum, 0, newAmount, oldAmount);
   } else if (newBoxSpread > 216 && oldBoxSpread < 1) {
-    alert('newBoxFilter');
     // new boxes only                                                  
     const remainder = combinedSpread - 216;
     combinedSpread = remainder;
@@ -460,7 +471,6 @@ const getSkidSize = () => {
     crateNum += 1;
     getSkidSize();
   } else if (oldBoxSpread > 198 && newBoxSpread < 1) { 
-    alert('oldBoxFilter');
     // old boxes only
     const remainder = combinedSpread - 198;
     combinedSpread = remainder;

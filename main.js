@@ -367,6 +367,7 @@ function resultPanelMod() {
 // this function will be used exclusively for mixed boxes
 
 const getSkidSizeMixed = () => {
+  resultPanelMod();
   if (combinedSpread > 40 && combinedSpread < 235 && newBoxSpread < 217 && oldBoxSpread < 199) {
     skidWidth = '43"';
     findCrateHeight(newBoxSpread, oldBoxSpread, 40, 5);
@@ -488,6 +489,7 @@ const getSkidSize = () => {
     combinedSpread = tempSpread;
     oldBoxSpread = 0; 
     oldAmount = 0;
+    crateNum += 1;
     getSkidSizeMixed();     // this should separate old from new boxes and create skids of new only.
     // remove new boxes from the equation and create old box skid
     newBoxSpread = newSpreadStorage;
@@ -498,7 +500,7 @@ const getSkidSize = () => {
     newBoxSpread = 0;
     newAmount = 0;                                          
     oldAmount = oldAmountStorage;
-   
+    crateNum =+ 1;
     getSkidSizeMixed();
 
 

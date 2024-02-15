@@ -391,7 +391,7 @@ const getSkidSizeMixed = () => {
     
     // need to return combinedspread to its original number before continuing
     const remainder = combinedSpread - 216;
-    combinedSpread = remainder;                              //// work on this function. find way to add leftover new boxes to  crate
+    combinedSpread = remainder;                              //// work on this function. find way to add leftover new boxes to crate
     newBoxSpread = remainder;                                /////// that contains the remainder portion from mixed boxes function
     const boxRemainder = remainder / newBox.width;
     tempNewAmount = boxRemainder;   
@@ -458,7 +458,7 @@ const getSkidSize = () => {
     newAmount = 36;
     crateNum += 1;
     getSkidSize();
-  } else if (oldBoxSpread > 198) {
+  } else if (oldBoxSpread > 198 && newBoxSpread < 1) { 
     alert('oldBoxFilter');
     // old boxes only
     const remainder = combinedSpread - 198;
@@ -506,7 +506,7 @@ const getSkidSize = () => {
    } 
 };
 
-// create new getSkidSize function just for mixed boxes!
+
 
 ////////////Unboxed Gates Caluclator Logic ///////////////
 
@@ -611,7 +611,7 @@ const checkUnboxedValues = () => {
   const alum = document.getElementById('alum').value;
   const fg = document.getElementById('fiberglass').value;
   const radioValue = document.querySelector('input[name="type"]:checked').value;
-  alert(radioValue);
+ // alert(radioValue);
   if (radioValue === 'alum') {
     addAlumBases(bases);
     if (alumBaseAmount > 1) {
@@ -625,6 +625,7 @@ const checkUnboxedValues = () => {
     alert('please choose material!');
   }
 };
+
 
 const disableButton = () => {
   document.getElementById('subButton').setAttribute('disabled', 'true');
